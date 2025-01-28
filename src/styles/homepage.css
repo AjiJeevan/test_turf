@@ -1,0 +1,21 @@
+.main-section{
+    padding: 25px 50px;
+    height: 400px;
+    align-items: center;
+    justify-content: center;
+    background-image:  url('https://rymargrass.ca/wp-content/uploads/2023/03/Golf-57816838_Large-WEB-MED-1-1024x576.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+.main-section h1{
+    padding-top: 100px;
+}
+
+.div-search{
+
+    align-items: center;
+    padding-top: 50px;
+    width : 500px
+}
