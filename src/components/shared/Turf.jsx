@@ -1,20 +1,59 @@
-import React from 'react'
-import { Button, Card } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react'
+import { Button, Card, Container } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
-function Turf() {
+function Turf(props) {
+
+  const [token,setToken] = useState()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    setToken(localStorage.getItem("token"))
+  },[token])
+
+  const handleViewDetails = async () => {
+    try {
+      // setToken(localStorage.getItem("token"))
+      if (token) {
+        navigate(`turf-details/${props.turfInfo._id}`);
+      }
+      else {
+        alert("Please login to seethe details")
+      }
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  
+
   return (
-    <Card className='p-2 mt-0'>
-      <Card.Img
-        variant="top"
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUFRv5EFuO528AAwKdQIA833sA98LrdYlZJA&s"
-        className="mt-1 p-0"
-      />
-      <Card.Body>
-        <Card.Title>Turf Name</Card.Title>
-        <Card.Text>Turf Price</Card.Text>
-        <Button variant="success">VIEW DETAILS</Button>
-      </Card.Body>
-    </Card>
+    <Container>
+      <Card className="p-2 mt-0" id={props.turfInfo._id}>
+        <Card.Img
+          variant="top"
+          src={props.turfInfo.image}
+          style={{ height: "200px", objectFit: "contain" }}
+          className="mt-0 p-0"
+        />
+        <Card.Body className="align-items-center ">
+          <Card.Title className="text-center">
+            {props.turfInfo?.name}
+          </Card.Title>
+          <Card.Text className="text-center">
+            <b>AED {props.turfInfo?.price} / Hour</b>
+          </Card.Text>
+          {!token ? (
+            <></>
+          ) : (
+            <Button variant="success" onClick={handleViewDetails}>
+              VIEW DETAILS
+            </Button>
+          )}
+        </Card.Body>
+      </Card>
+    </Container>
   );
 }
 
