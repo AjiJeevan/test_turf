@@ -1,8 +1,8 @@
 import React from 'react'
 import Footer from '../components/shared/Footer'
-import Header from '../components/shared/header'
 import "../styles/homepage.css"
 import { Outlet } from 'react-router-dom'
+import Header from '../components/shared/Header';
 
 function Roots() {
   return (
