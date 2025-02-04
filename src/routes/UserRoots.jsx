@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/homepage.css";
 import { Outlet } from "react-router-dom";
 import Footer from "../components/shared/Footer";
-import UserHeader from "../components/user/userHeader";
+import UserHeader from "../components/user/UserHeader";
 
 function UserRoots() {
   return (
