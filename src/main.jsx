@@ -8,7 +8,6 @@ import store from './app/store'
 import { Provider } from 'react-redux'
 import AboutPage from './pages/user/AboutPage';
 import Contacts from './components/shared/Contacts';
-import SearchResult from './pages/user/searchResult';
 import LoginPage from './pages/user/LoginPage';
 import SignUpPage from './pages/user/SignUpPage';
 import UserHomePage from './pages/user/TurfDisplay';
@@ -18,6 +17,7 @@ import AdminRoots from './routes/AdminRoots';
 import AdminLoginPage from './pages/admin/AdminLoginPage';
 import AdminHomePage from './pages/admin/AdminHomePage';
 import ManagerHomePage from './pages/manager/ManagerHomePage';
+import SearchResult from './pages/user/SearchResult';
 
 const router = createBrowserRouter([
   {
