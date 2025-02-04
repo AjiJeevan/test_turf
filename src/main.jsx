@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Roots from './routes/roots';
+import Roots from './routes/Roots';
 import HomePage from './pages/user/Homepage';
 import ErrorPage from './pages/shared/ErrorPage';
 import store from './app/store'
