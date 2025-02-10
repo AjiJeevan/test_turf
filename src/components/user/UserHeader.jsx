@@ -4,13 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { setSearchValue } from "../../app/features/search/searchSlice";
 import { setSearchResult } from "../../app/features/search/searchResult";
+import {clearUser} from "../../app/features/user/userSlice"
+import { axiosInstance } from '../../config/axiosInstance';
+import DarkMode from '../shared/DarkMode';
+import toast from 'react-hot-toast';
 
 function UserHeader() {
     const searchName = useSelector((state) => state.search.value);
     const dispatch = useDispatch();
-
     const turfList = useSelector((state) => state.turf.value);
-
     const navigate = useNavigate();
 
     const handleSearchChange = (event) => {
@@ -29,18 +31,42 @@ function UserHeader() {
           alert("Please Provide a value to search");
           return;
         }
+
         const filteredTurfs = turfList.filter((turf) =>
-          turf.name.toLowerCase().includes(searchName)
+        turf.name.toLowerCase().includes(searchName)
         );
+        
         console.log(filteredTurfs);
         dispatch(setSearchResult(filteredTurfs));
         dispatch(setSearchValue(""));
 
         navigate("/user/user-search");
+
       } catch (error) {
         console.log(`ERROR in searchList ==== ${error}`);
       }
-    };
+  };
+  
+  const handlLogOut = async () => {
+    try {
+      const response = await axiosInstance({
+              method: "GET",
+              url: "/user/logout",
+      });
+      
+      console.log("logout=====",response?.data?.message)
+
+      localStorage.removeItem("token");
+      dispatch(clearUser());
+      toast.success("You have loged out successfully")
+      navigate("./");
+
+    } catch (error) {
+      console.log(error)
+      toast.error(error?.response?.data?.message)
+    }
+  }
+
   return (
     <>
       <Container>
@@ -49,24 +75,25 @@ function UserHeader() {
             <Navbar.Brand href="./" className="fw-bold text-success">
               TurfArena
             </Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto my-2 my-lg-0">
                 <Link
-                  to="/user"
+                  to="/user/turf"
                   className="text-dark my-2 mx-2"
                   style={{ textDecoration: "none" }}
                 >
                   Home
                 </Link>
                 <Link
-                  to="./about"
+                  to="/user/turf"
                   className="text-dark my-2 mx-2"
                   style={{ textDecoration: "none" }}
                 >
                   Booking
                 </Link>
                 <Link
-                  to="./contact"
+                  to="/user/profile"
                   className="text-dark my-2 mx-2"
                   style={{ textDecoration: "none" }}
                 >
@@ -75,10 +102,7 @@ function UserHeader() {
                 <Button
                   variant="success"
                   className="ms-3"
-                  onClick={() => {
-                    localStorage.removeItem("token");
-                    navigate("/login");
-                  }}
+                  onClick={handlLogOut}
                 >
                   Log Out
                 </Button>
@@ -95,6 +119,7 @@ function UserHeader() {
                 <Button variant="success" onClick={searchList}>
                   Search
                 </Button>
+                <DarkMode />
               </Form>
             </Navbar.Collapse>
           </Container>

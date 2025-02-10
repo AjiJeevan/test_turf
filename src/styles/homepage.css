@@ -31,9 +31,10 @@
 .contact-section{
     margin: 20px 0px;
     max-width: 100vw;
-    height: 400px;
+    height: 100%;
     background-image:  url('https://cdn.prod.website-files.com/6573a6ed195baa7e77abe647/658184e86d3f9aec8a101f77_home-hero-background.jpg');
     background-repeat: no-repeat;
     background-size: cover; 
+    object-fit: contain;
    
 }

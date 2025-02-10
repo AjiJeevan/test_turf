@@ -8,7 +8,7 @@ function LoginPage() {
 
   return (
     <>
-      <Container>
+      <Container className='pt-5 mt-5'>
         <Row className="main-section">
           <Col className="text-center align-self-start">
             <h1 className="text-white">Make Every Match Memorable</h1>

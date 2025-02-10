@@ -5,15 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSearchValue } from '../../app/features/search/searchSlice';
 import { setSearchResult } from '../../app/features/search/searchResult';
 import { useNavigate } from 'react-router-dom';
+import DarkMode from './DarkMode';
 
 function Header() {
 
   const searchName = useSelector((state) => state.search.value);
   const dispatch = useDispatch();
-  
   const turfList = useSelector((state) => state.turf.value);
-
   const navigate = useNavigate()
+
 
   const handleSearchChange = (event) => {
     try {
@@ -53,6 +53,7 @@ function Header() {
             <Navbar.Brand href="./" className="fw-bold text-success">
               TurfArena
             </Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto my-2 my-lg-0">
                 <Link
@@ -76,9 +77,13 @@ function Header() {
                 >
                   Contact
                 </Link>
-                <Button variant="success" className="ms-3" onClick={() => {
-                  navigate("/login")
-                }}>
+                <Button
+                  variant="success"
+                  className="ms-3"
+                  onClick={() => {
+                    navigate("./login");
+                  }}
+                >
                   Log in/Sign in
                 </Button>
               </Nav>
@@ -94,6 +99,7 @@ function Header() {
                 <Button variant="success" onClick={searchList}>
                   Search
                 </Button>
+                <DarkMode />
               </Form>
             </Navbar.Collapse>
           </Container>

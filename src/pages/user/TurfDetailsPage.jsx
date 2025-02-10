@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import { axiosInstance } from '../../config/axiosInstance';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function TurfDetailsPage() {
+  // console.log("checking.........")
   const [turfData, setTurfData] = useState();
-  const turfId= useParams().id
+  const turfId = useParams().id
+  const userInfo = useSelector((state)=>(state.user))
   
   const fetchData = async () => {
     try {
@@ -13,9 +16,10 @@ function TurfDetailsPage() {
            method: "GET",
            url: `turf/turf-details/${turfId}`,
       })
-      setTurfData(response.data.data)
+      setTurfData(response?.data?.data)
+      console.log("Turf Details ==== ", turfData)
     } catch (error) {
-      console.log(error.response.data.message)
+      console.log(error.response?.data?.message)
     }
   }
 
@@ -31,7 +35,7 @@ function TurfDetailsPage() {
 
   return (
     <>
-      <Container className="my-4">
+      <Container className="my-4 pt-5">
         <Row>
           <Col md={6}>
             <Card>
@@ -59,9 +63,16 @@ function TurfDetailsPage() {
                 ))}
               </ul>
             </p>
-            <Button variant="success" size="lg" className="w-100 mt-3">
-              Book Now
-            </Button>
+            {userInfo.role == "user" ? (
+              <>
+                <Button variant="success" size="lg" className="w-100 mt-3">
+                  Book Now
+                </Button>
+              </>
+            ) : (
+                <>
+                </>
+            )}
           </Col>
         </Row>
       </Container>

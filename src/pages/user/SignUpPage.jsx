@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { Form, Button, Container, Card, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../config/axiosInstance";
+import { useDispatch } from "react-redux";
+import { clearUser, setUser } from "../../app/features/user/userSlice";
 
 function SignUpPage() {
-    const formData = new FormData();
+  const formData = new FormData();
+  const dispatch = useDispatch(); 
     const [userData, setUserData] = useState({
       fname: "",
       lname: "",
@@ -58,15 +61,14 @@ function SignUpPage() {
             
         console.log("User data uploaded successfully:", response.data.data);
 
-        const token = response.data.token;
-        localStorage.setItem("token", token);
-        console.log(token)
-
-        navigate("/user")
+        dispatch(setUser(response?.data?.data))
+        navigate("/user/turf")
 
         } catch (error) {
         console.error('Error uploading user data:', error);
         setError(error.response.data.message);
+        dispatch(clearUser())
+        navigate("/sign-up")
         }
     }
 
@@ -78,7 +80,7 @@ function SignUpPage() {
             "https://t3.ftcdn.net/jpg/07/22/89/60/360_F_722896080_1BEPJOrcjw91HtLLGFe9W44ZgTkhKG2F.jpg",
         }}
       >
-        <Container className="mt-5 d-flex justify-content-center align-items-center">
+        <Container className="mt-5 pt-5 d-flex justify-content-center align-items-center">
           <Card className="p-4 shadow-lg" style={{ width: "1000px" }}>
             <h3 className="text-center mb-3">Sign Up</h3>
             {error && <p className="text-danger text-center">{error}</p>}

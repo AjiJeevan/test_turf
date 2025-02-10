@@ -28,7 +28,7 @@ function TurfDisplay() {
   }, []);
   return (
     <>
-      <Container className='mt-0 py-3'>
+      <Container className=' mt-5 px-5 py-3'>
         <Row>
           {turfList?.map((turf, index) => {
             return (

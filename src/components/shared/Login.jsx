@@ -1,19 +1,32 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form, Button, Container, Card } from "react-bootstrap";
 import { axiosInstance } from '../../config/axiosInstance';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {setUser} from "../../app/features/user/userSlice"
+import toast from 'react-hot-toast';
+
 
 
 function Login() {
 
   const navigate = useNavigate()
-  
+  let userInfo= useSelector((state)=>(state.user))
+  const dispatch = useDispatch()
+
+
   const [error, setError] = useState("");
+  const user = {
+    role: "user",
+    loginAPI: "/user/login",
+    profileRoute: "/user/turf",
+  }
   
     const [loginData, setLoginData] = useState({
       email: "",
-      password: "",
+      password: ""
     });
+  
 
     const changeHandler = (event) => {
       let temData = { ...loginData };
@@ -26,18 +39,19 @@ function Login() {
         try {
             const response = await axiosInstance({
               method: "PUT",
-              url: "/user/login",
+              url: user.loginAPI,
               data: loginData,
             });
-          const token = response.data.token
-          localStorage.setItem("token", token);
-
-            if(token)
-                navigate("/user")
+          console.log(" user data==== ",response.data.data)
+  
+          dispatch(setUser(response?.data?.data))
+          
+          toast.success("Login Successfull")
+          navigate(user.profileRoute)
             
         } catch (error) {
-           setError(error.response.data.message)
-            
+          console.log(error)
+          toast.error(error?.response?.data?.message)
         }
     }
     

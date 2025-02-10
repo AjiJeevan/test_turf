@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Container } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 function Turf(props) {
 
   const [token,setToken] = useState()
   const navigate = useNavigate()
+  const userInfo = useSelector((state)=>(state.user))
 
-  useEffect(() => {
-    setToken(localStorage.getItem("token"))
-  },[token])
+  // useEffect(() => {
+  //   setToken(localStorage.getItem("token"))
+  // },[token])
 
   const handleViewDetails = async () => {
     try {
       // setToken(localStorage.getItem("token"))
-      if (token) {
+      if ( userInfo.isUserAuth && userInfo.role == "user"){
+        navigate(`turf-details/${props.turfInfo._id}`);
+      }
+      else if (userInfo.isUserAuth && userInfo.role == "manager") {
         navigate(`turf-details/${props.turfInfo._id}`);
       }
       else {
@@ -44,7 +49,7 @@ function Turf(props) {
           <Card.Text className="text-center">
             <b>AED {props.turfInfo?.price} / Hour</b>
           </Card.Text>
-          {!token ? (
+          {!userInfo.isUserAuth ? (
             <></>
           ) : (
             <Button variant="success" onClick={handleViewDetails}>

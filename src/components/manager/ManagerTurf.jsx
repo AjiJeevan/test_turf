@@ -1,12 +1,15 @@
 import React from 'react'
 import { Button, Card, Container } from 'react-bootstrap';
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import { BsEye, BsPencilSquare, BsTrash } from 'react-icons/bs';
 
-function AdminTurf(props) {
+function ManagerTurf(props) {
+     const handleViewDetails = async () => {
+         try {
+           
+       } catch (error) {}
+     };
   return (
     <Container>
-      <Card className="p-2 mt-0" style={{height:"400px"}}>
+      <Card className="p-2 mt-0" style={{ height: "400px" }}>
         <Card.Img
           variant="top"
           src={props?.turfInfo?.image}
@@ -21,15 +24,9 @@ function AdminTurf(props) {
             </Card.Text>
           </div>
           <div className="d-flex justify-content-start pt-2">
-            <ButtonGroup className="btn-sm" aria-label="Turf-options">
-              <Button variant="secondary"><BsEye /></Button>
-              <Button variant="secondary">
-                <BsPencilSquare/>
-              </Button>
-              <Button variant="secondary">
-                <BsTrash />
-              </Button>
-            </ButtonGroup>
+            <Button variant="success" onClick={handleViewDetails}>
+              VIEW DETAILS
+            </Button>
           </div>
         </Card.Body>
       </Card>
@@ -37,4 +34,4 @@ function AdminTurf(props) {
   );
 }
 
-export default AdminTurf
+export default ManagerTurf

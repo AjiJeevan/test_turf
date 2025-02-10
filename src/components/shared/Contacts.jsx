@@ -42,7 +42,7 @@ function Contacts() {
             <p>+91 9212345457</p>
             <p>Mon to Fri 9 AM to 6 PM Connect with us:</p>
           </Col>
-          <Col className="justify-content-center">
+          <Col className="justify-content-center m-3 ps-5">
             <Form
               onSubmit={handleEnquiry}
               method="post"
@@ -60,8 +60,10 @@ function Contacts() {
                 />
               </Form.Group>
 
-              <Form.Group className="mb-3" controlId="loginPassword">
-                <Form.Label className="text-white">Password</Form.Label>
+              <Form.Group className="mb-3" controlId="message">
+                <Form.Label className="text-white">
+                  Enter your message
+                </Form.Label>
                 <Form.Control
                   as="textarea"
                   name="enquiry"

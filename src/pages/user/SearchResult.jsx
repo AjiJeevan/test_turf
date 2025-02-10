@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 function SearchResult() {
   const token = localStorage.getItem("token")
   const searchResult = useSelector((state) => state.searchResult.value)
+  const userInfo = useSelector((state)=>(state.user))
   const navigate = useNavigate()
   
   const handleLogin = async () => {
@@ -20,8 +21,9 @@ function SearchResult() {
     return (
       <>
         <section></section>
+        { !searchResult ? <></> : 
         <section id="section-search">
-          <Container className="mt-5">
+          <Container className="mt-5 pt-5">
             <Row>
               {searchResult?.map((turf, index) => {
                 return (
@@ -37,24 +39,27 @@ function SearchResult() {
                     <Turf turfInfo={turf} />
                   </Col>
                 );
+                
               })}
             </Row>
           </Container>
-        </section>
-        {!token ? (
-            <>
-                <div className="d-flex justify-content-center mt-3">
-                  <Button variant="success" onClick={handleLogin}>
-                    LogIn / SignUp to see the details
-                  </Button>
-                </div>
-                <section id="contact">
-                  <Contacts />
-                </section>
-            </>
+        
+        {!userInfo.isUserAuth ? (
+          <>
+            <div className="d-flex justify-content-center mt-3">
+              <Button variant="success" onClick={handleLogin}>
+                LogIn / SignUp to see the details
+              </Button>
+            </div>
+          </>
         ) : (
           <></>
-        )}
+          )}
+        </section>
+        }
+        <section id="contact">
+          <Contacts />
+        </section>
       </>
     );
 }

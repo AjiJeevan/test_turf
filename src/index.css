@@ -1,0 +1,14 @@
+#root.dark {
+  background-color: #212529;
+  color: #f8f9fa;
+}
+
+#root.light {
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+/* Smooth transition effect */
+#root {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

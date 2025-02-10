@@ -1,6 +1,7 @@
 import React from 'react'
 import { Container, ListGroup } from 'react-bootstrap';
 import "../../styles/about.css"
+import AboutCarousel from './AboutCarousel';
 
 function About() {
   return (
@@ -30,6 +31,7 @@ function About() {
             payments, and a smooth booking experience.
           </p>
           <h2 className="text-center">Why Choose Us?</h2>
+          {/* <AboutCarousel /> */}
           <ListGroup as="ul" variant='flush'>
             <ListGroup.Item
               as="li"

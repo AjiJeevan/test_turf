@@ -1,7 +1,11 @@
 import React from 'react'
 import { Container } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Footer() {
+  const isUserAuth = useSelector((state) => (state.user.isUserAuth))
+  const navigate = useNavigate()
   return (
     <Container>
       <footer className=".bg-success text-white text-center py-4">
@@ -37,6 +41,21 @@ function Footer() {
             </a>
           </p>
         </div>
+        {!isUserAuth ? (
+          <Link className="text-white" to="/admin-login"
+            onClick={(e) => {
+            e.preventDefault()
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+            setTimeout(() => {
+              navigate("/admin-login");
+            }, 500); 
+            }}
+          >
+            Admin/Manager Login
+          </Link>
+        ) : (
+          <></>
+        )}
       </footer>
     </Container>
   );
