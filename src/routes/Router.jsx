@@ -1,7 +1,6 @@
 import { createBrowserRouter} from "react-router-dom";
 import UserLayout from "../layout/UserLayout";
 import ErrorPage from "../pages/shared/ErrorPage"
-import HomePage from "../pages/user/HomePage"
 import AboutPage from "../pages/user/AboutPage"
 import SearchResult from "../pages/user/SearchResult"
 import ContactPage from "../pages/user/ContactPage";
@@ -22,6 +21,7 @@ import ManagerBookingPage from "../pages/manager/ManagerBookingPage";
 import Profile from "../pages/shared/Profile";
 import UserProfile from "../pages/user/UserProfile";
 import ManagerProfile from "../pages/manager/ManagerProfile";
+import HomePage from "../pages/user/HomePage"
 
 
 export const router = createBrowserRouter([
