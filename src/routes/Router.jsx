@@ -21,7 +21,7 @@ import ManagerBookingPage from "../pages/manager/ManagerBookingPage";
 import Profile from "../pages/shared/Profile";
 import UserProfile from "../pages/user/UserProfile";
 import ManagerProfile from "../pages/manager/ManagerProfile";
-import HomePage from "../pages/user/HomePage"
+import Home from "../pages/user/Home";
 
 
 export const router = createBrowserRouter([
@@ -32,7 +32,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <HomePage />,
+        element:<Home />
       },
       {
         path: "about",

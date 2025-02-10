@@ -10,7 +10,7 @@ import { setTurfLists } from '../../app/features/turf/turfSlice';
 import MainBanner from '../../components/shared/MainBanner';
 import { useNavigate } from 'react-router-dom';
 
-function HomePage() {
+function Home() {
 
   const token = localStorage.getItem("token")
   const turfList = useSelector((state) => state.turf.value);
@@ -75,4 +75,4 @@ function HomePage() {
   );
 }
 
-export default HomePage
+export default Home
