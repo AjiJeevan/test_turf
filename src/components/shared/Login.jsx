@@ -39,7 +39,7 @@ function Login() {
         try {
             const response = await axiosInstance({
               method: "PUT",
-              url: user.loginAPI,
+              url: "/user/login",
               data: loginData,
             });
           console.log(" user data==== ",response.data.data)
