@@ -5,17 +5,12 @@ import { useNavigate } from 'react-router-dom';
 
 function Turf(props) {
 
-  const [token,setToken] = useState()
   const navigate = useNavigate()
   const userInfo = useSelector((state)=>(state.user))
 
-  // useEffect(() => {
-  //   setToken(localStorage.getItem("token"))
-  // },[token])
 
   const handleViewDetails = async () => {
     try {
-      // setToken(localStorage.getItem("token"))
       if ( userInfo.isUserAuth && userInfo.role == "user"){
         navigate(`turf-details/${props.turfInfo._id}`);
       }
@@ -35,7 +30,11 @@ function Turf(props) {
 
   return (
     <Container>
-      <Card className="p-2 mt-0" id={props.turfInfo._id}>
+      <Card
+        className="p-2 mt-0 my-3"
+        id={props.turfInfo._id}
+        style={{ height: "400px" }}
+      >
         <Card.Img
           variant="top"
           src={props.turfInfo.image}

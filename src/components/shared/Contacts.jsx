@@ -83,7 +83,7 @@ function Contacts() {
         </Row>
       </Container>
     </>
-  );
+  )
 }
 
 export default Contacts

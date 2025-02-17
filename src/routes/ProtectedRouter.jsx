@@ -7,17 +7,14 @@ export const ProtectedRouter = () => {
   const userInfo = useSelector((state) => (state.user))
   const location = useLocation()
 
-  useEffect(() => {
-      console.log("isAuthUser======",userInfo.isUserAuth)
+  // useEffect(() => {
+      // console.log("isAuthUser======",userInfo.isUserAuth)
         if (!userInfo.isUserAuth) {
-          navigate("./login");
-          return;
+          navigate("./login")
+          return
     }
-    //     else {
-    //       navigate(location.pathname)
-    // }
-    },[userInfo.isUserAuth, navigate])
+    // },[])
     
-    return <Outlet />;
+    return <Outlet />
     
 }

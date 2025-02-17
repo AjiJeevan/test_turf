@@ -15,11 +15,11 @@ function TurfDisplay() {
         method: "GET",
         url: "/turf/all-turf",
       });
-      console.log(response.data);
+      // console.log(response.data);
       dispatch(setTurfLists(response?.data?.data));
       // setTurfList(response?.data?.data)
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -33,7 +33,7 @@ function TurfDisplay() {
           {turfList?.map((turf, index) => {
             return (
               <Col key={turf?._id} xs={12} sm={12} md={6} lg={4} xl={3} xxl={3}>
-                {console.log(turf)}
+                {/* {console.log(turf)} */}
                 <Turf turfInfo={turf} />
               </Col>
             );

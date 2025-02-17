@@ -171,10 +171,7 @@ function Profile() {
                     <Button variant="success" onClick={handleSaveProfile}>
                       Save Changes
                     </Button>
-                    <Button
-                      variant="success"
-                      onClick={handleCancel}
-                    >
+                    <Button variant="success" onClick={handleCancel}>
                       Cancel
                     </Button>
                   </div>
@@ -191,7 +188,9 @@ function Profile() {
                     <strong>Phone:</strong> {user?.mobile}
                   </p>
                   <p>
-                    <strong>Date of Birth :</strong> {user?.dob}
+                    <strong>Date of Birth :</strong>
+                    {/* {user?.dob} */}
+                    {new Date(user?.dob).toLocaleDateString()}
                   </p>
                   <p>
                     <strong>Role :</strong> {userInfo?.role}

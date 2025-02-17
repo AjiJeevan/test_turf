@@ -26,7 +26,7 @@ function AdminHeader() {
         localStorage.removeItem("token");
         dispatch(clearUser());
         toast.success("You have loged out successfully");
-        navigate("./");
+        navigate("admin/login");
   
       } catch (error) {
         console.log(error)
@@ -53,25 +53,32 @@ function AdminHeader() {
                       <div className="d-flex justify-content-end">
                         <div className="mt-2">
                           <Link
-                            to="/admin/homepage"
+                            to="/admin/home"
                             className="text-dark my-2 mx-2"
                             style={{ textDecoration: "none" }}
                           >
                             Home
                           </Link>
                           <Link
-                            to="/admin/turf"
+                            to="/admin/turfs"
                             className="text-dark my-2 mx-2"
                             style={{ textDecoration: "none" }}
                           >
                             Turf Details
                           </Link>
                           <Link
-                            to="/admin/manager"
+                            to="/admin/managers"
                             className="text-dark my-2 mx-2"
                             style={{ textDecoration: "none" }}
                           >
                             Manager Details
+                          </Link>
+                          <Link
+                            to="/admin/bookings"
+                            className="text-dark my-2 mx-2"
+                            style={{ textDecoration: "none" }}
+                          >
+                            Bookings
                           </Link>
                           <Link
                             to="/admin/enquiries"
@@ -99,8 +106,6 @@ function AdminHeader() {
                       className="ms-3"
                       onClick={
                         handlLogOut
-
-                        // navigate("");
                       }
                     >
                       Log Out

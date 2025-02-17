@@ -47,7 +47,7 @@ function Footer() {
             e.preventDefault()
             window.scrollTo({ top: 0, behavior: 'smooth' })
             setTimeout(() => {
-              navigate("/admin-login");
+              navigate("admin/login");
             }, 500); 
             }}
           >
@@ -58,7 +58,7 @@ function Footer() {
         )}
       </footer>
     </Container>
-  );
+  )
 }
 
 export default Footer

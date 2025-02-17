@@ -1,9 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Footer from "../components/shared/Footer";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import AdminHeader from "../components/admin/AdminHeader";
+import { useDispatch, useSelector } from "react-redux";
+import { clearUser, setUser } from "../app/features/user/userSlice";
+import { axiosInstance } from "../config/axiosInstance";
 
 function AdminLayout() {
+
+  const userInfo = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  const checkUser = async () => {
+      // console.log("Location=======",location)
+      try {
+        const response = await axiosInstance({
+          method: "GET",
+          url: "/admin/check-user",
+        });
+        dispatch(setUser());
+        // console.log("isUserAuth from Admin Layout====", userInfo.isUserAuth);
+      } catch (error) {
+        dispatch(clearUser());
+        console.log(error);
+      }
+    };
+  
+    useEffect(() => {
+      checkUser();
+    }, [location.pathname]);
+
   return (
     <>
       <header>
@@ -16,7 +43,7 @@ function AdminLayout() {
         <Footer />
       </footer>
     </>
-  );
+  )
 }
 
-export default AdminLayout;
+export default AdminLayout

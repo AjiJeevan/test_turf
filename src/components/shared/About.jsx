@@ -94,7 +94,7 @@ function About() {
         </div>
       </Container>
     </>
-  );
+  )
 }
 
 export default About

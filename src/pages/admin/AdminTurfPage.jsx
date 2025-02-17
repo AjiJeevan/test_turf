@@ -9,7 +9,7 @@ function AdminTurfPage() {
 // const fetchTurf = useFetch("/turf/all-turf");
   // const turfList = useSelector((state) => state.turf.value);
   const [turfList,isLoading,error] = useFetch("/turf/all-turf");
-console.log("turfdfds", turfList)
+// console.log("turfdfds", turfList)
     
   return (
     <>

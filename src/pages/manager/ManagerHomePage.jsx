@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useFetch } from "../../hooks/useFetch";
@@ -8,7 +8,8 @@ import Turf from "../../components/shared/Turf";
 
 function ManagerHomePage(props) {
   const userInfo = useSelector((state) => (state.user))
-  const [turfList, isLoading, error] = useFetch("/manager/assigned-turf");
+  const [refreshState, setRefreshState] = useState(false);
+  const [turfList, isLoading, error] = useFetch("/manager/assigned-turf",refreshState);
   console.log("Assigned Turfs ===== ", turfList)
 
   const handleViewDetails = async () => {
@@ -19,37 +20,44 @@ function ManagerHomePage(props) {
     }
   }
 
+  useEffect(() => {
+    
+  },[refreshState])
+
   return (
-      <Container>
+    <Container>
       {isLoading ? (
         <>
           <TurfPlaceholder />
         </>
       ) : (
         <>
-          <Row>
-            {turfList?.map((turf, index) => {
-              return (
-                <Col
-                  key={turf?._id}
-                  xs={12}
-                  sm={12}
-                  md={6}
-                  lg={4}
-                  xl={3}
-                  xxl={3}
-                >
-                  {console.log(turf)}
-                  <section className="shadow p-3 mb-5 bg-body rounded">
-                    <Turf turfInfo={turf} />
-                  </section>
-                </Col>
-              );
-            })}
-          </Row>
+            <Container>
+              <h2 className="text-center">Assigned Turfs</h2>
+            <Row>
+              {turfList?.map((turf, index) => {
+                return (
+                  <Col
+                    key={turf?._id}
+                    xs={12}
+                    sm={12}
+                    md={6}
+                    lg={4}
+                    xl={3}
+                    xxl={3}
+                  >
+                    {console.log(turf)}
+                    <section className="shadow p-3 mb-5 bg-body rounded">
+                      <Turf turfInfo={turf} />
+                    </section>
+                  </Col>
+                );
+              })}
+            </Row>
+          </Container>
         </>
       )}
-      </Container>
+    </Container>
   );
 }
 

@@ -24,7 +24,7 @@ function Home() {
         method: "GET",
         url: "/turf/all-turf",
       });
-      console.log(response.data)
+      // console.log(response.data)
       dispatch(setTurfLists(response?.data?.data.slice(0, 4)));
       
     } catch (error) {

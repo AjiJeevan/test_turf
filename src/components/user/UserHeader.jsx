@@ -86,11 +86,11 @@ function UserHeader() {
                   Home
                 </Link>
                 <Link
-                  to="/user/turf"
+                  to="/user/booking"
                   className="text-dark my-2 mx-2"
                   style={{ textDecoration: "none" }}
                 >
-                  Booking
+                  Booking Details
                 </Link>
                 <Link
                   to="/user/profile"

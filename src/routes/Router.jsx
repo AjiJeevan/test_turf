@@ -22,6 +22,17 @@ import Profile from "../pages/shared/Profile";
 import UserProfile from "../pages/user/UserProfile";
 import ManagerProfile from "../pages/manager/ManagerProfile";
 import Home from "../pages/user/Home";
+import { ProtectedRouterAdmin } from "./ProtectedRouterAdmin";
+import { ProtectedRouterManager } from "./ProtectedRouterManager";
+import NewTurfPage from "../pages/admin/NewTurfPage";
+import NewManager from "../pages/admin/NewManager";
+import UserBooking from "../pages/user/UserBooking";
+import BookingDetailsPage from "../pages/admin/BookingDetailsPage";
+import ManagerTurfDetailsPage from "../pages/manager/ManagerTurfDetailsPage";
+import AdminTurfDetailsPage from "../pages/admin/AdminTurfDetailsPage";
+import AdminTurfEditPage from "../pages/admin/AdminTurfEditPage";
+import PaymentSuccess from "../pages/user/PaymentSuccess";
+import PaymentError from "../pages/user/PaymentError";
 
 
 export const router = createBrowserRouter([
@@ -32,7 +43,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element:<Home />
+        element: <Home />,
       },
       {
         path: "about",
@@ -79,37 +90,45 @@ export const router = createBrowserRouter([
             path: "profile",
             element: <UserProfile />,
           },
+          {
+            path: "booking",
+            element: <UserBooking />,
+          },
+          {
+            path: "payment-success",
+            element: <PaymentSuccess />
+          },
+          {
+            path: "payment-error",
+            element : <PaymentError />
+          }
         ],
-      },
-      {
-        path: "admin-login",
-        element: <AdminLoginPage />,
       },
     ],
   },
   {
-    path: "",
+    path: "admin",
     element: <AdminLayout />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "admin",
-        element: <ProtectedRouter />,
+        path: "login",
+        element: <AdminLoginPage />,
+      },
+      {
+        path: "",
+        element: <ProtectedRouterAdmin />,
         children: [
           {
-            path: "homepage",
+            path: "home",
             element: <AdminHomePage />,
           },
           {
-            path: "login",
-            element: <AdminLoginPage />,
-          },
-          {
-            path: "turf",
+            path: "turfs",
             element: <AdminTurfPage />,
           },
           {
-            path: "manager",
+            path: "managers",
             element: <AdminManagerPage />,
           },
           {
@@ -118,37 +137,52 @@ export const router = createBrowserRouter([
           },
           {
             path: "turf-details/:id",
-            element: <TurfDetailsPage />,
+            element: <AdminTurfDetailsPage />,
           },
           {
             path: "profile",
             element: <Profile />,
+          },
+          {
+            path: "new-turf",
+            element: <NewTurfPage />,
+          },
+          {
+            path: "new-manager",
+            element: <NewManager />,
+          },
+          {
+            path: "bookings",
+            element: <BookingDetailsPage />,
+          },
+          {
+            path: "turf-edit/:id",
+            element: <AdminTurfEditPage />,
           },
         ],
       },
     ],
   },
   {
-    path: "",
+    path: "manager",
     element: <ManagerLayout />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "manager",
-        element: <ProtectedRouter />,
+        path: "login",
+        element: <AdminLoginPage />,
+      },
+      {
+        path: "",
+        element: <ProtectedRouterManager />,
         children: [
           {
-            path: "login",
-            element: <AdminLoginPage />,
-          },
-          {
-            path: "homepage",
+            path: "home",
             element: <ManagerHomePage />,
           },
-
           {
-            path: "homepage/turf-details/:id",
-            element: <TurfDetailsPage />,
+            path: "home/turf-details/:id",
+            element: <ManagerTurfDetailsPage />,
           },
           {
             path: "bookings",
@@ -156,8 +190,8 @@ export const router = createBrowserRouter([
           },
           {
             path: "profile",
-            element : <ManagerProfile />
-          }
+            element: <ManagerProfile />,
+          },
         ],
       },
     ],

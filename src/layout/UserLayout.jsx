@@ -10,12 +10,12 @@ import { clearUser, setUser } from '../app/features/user/userSlice';
 function UserLayout() {
   const userInfo = useSelector((state) => (state.user))
   
-    console.log("isUserAuth from User Layout====", userInfo.isUserAuth);
+  //  console.log("isUserAuth from User Layout====", userInfo.isUserAuth);
    const dispatch = useDispatch();
    const location = useLocation();
 
   const checkUser = async () => {
-    console.log("Location=======",location)
+    // console.log("Location=======",location)
     try {
       const response = await axiosInstance({
         method: "GET",
@@ -46,7 +46,7 @@ function UserLayout() {
         </footer>
       </section>
     </div>
-  );
+  )
 }
 
 export default UserLayout

@@ -35,7 +35,7 @@ function SignUpPage() {
         return;
       }
 
-      console.log("User Data:", userData);
+      // console.log("User Data:", userData);
 
         setError(""); 
       registerNewUser(userData)
@@ -54,18 +54,18 @@ function SignUpPage() {
             formData.append("profilePic", userData.profilePic);
             
 
-            console.log([...formData.entries()]);
+            // console.log([...formData.entries()]);
         const response = await axiosInstance.post("/user/signup", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
             
-        console.log("User data uploaded successfully:", response.data.data);
+        // console.log("User data uploaded successfully:", response.data.data);
 
         dispatch(setUser(response?.data?.data))
         navigate("/user/turf")
 
         } catch (error) {
-        console.error('Error uploading user data:', error);
+        // console.error('Error uploading user data:', error);
         setError(error.response.data.message);
         dispatch(clearUser())
         navigate("/sign-up")
@@ -193,4 +193,4 @@ function SignUpPage() {
   );
 }
 
-export default SignUpPage;
+export default SignUpPage

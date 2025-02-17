@@ -25,7 +25,7 @@ function ManagerHeader() {
       localStorage.removeItem("token");
         dispatch(clearUser());
         toast.success("You have loged out successfully");
-      navigate("./");
+      navigate("manager/login");
     } catch (error) {
         console.log(error);
         toast.error(error?.response?.data?.message);
@@ -52,19 +52,19 @@ function ManagerHeader() {
                       <div className="d-flex justify-content-end">
                         <div className="mt-2">
                           <Link
-                            to="/manager/homepage"
+                            to="/manager/home"
                             className="text-dark my-2 mx-2"
                             style={{ textDecoration: "none" }}
                           >
                             Home
                           </Link>
-                          <Link
-                            to="/manager/homepage"
+                          {/* <Link
+                            to="/manager/home"
                             className="text-dark my-2 mx-2"
                             style={{ textDecoration: "none" }}
                           >
                             Assigned Turfs
-                          </Link>
+                          </Link> */}
                           <Link
                             to="/manager/bookings"
                             className="text-dark my-2 mx-2"

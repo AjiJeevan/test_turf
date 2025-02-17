@@ -13,7 +13,8 @@ function UserProfile() {
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
     const role = useSelector((state) => state.user.role);
-    const [isUpdating ,setIsUpdating] = useState(false)
+  const [isUpdating, setIsUpdating] = useState(false)
+  
   console.log("Role ===== ", role);
 
   const fetchData = async () => {
@@ -60,7 +61,7 @@ function UserProfile() {
       formData.append("profilePic", selectedFile);
     }
 
-    console.log([...formData.entries()]);
+    // console.log([...formData.entries()]);
 
     try {
       const response = await axiosInstance.post(
@@ -71,17 +72,19 @@ function UserProfile() {
         }
       );
 
-      console.log("response ==== ", response?.data?.data);
+      // console.log("response ==== ", response?.data?.data);
       
       setTimeout(() => {
         setIsEdting(false);
           dispatch(setUser(response?.data?.data));
-          setIsUpdating(false)
         toast.success("Profile Updated Successfully");
       }, 1000);
     } catch (error) {
       console.log(error);
     //   toast.error("Error in updating profile")
+      }
+    finally {
+      setIsUpdating(false);
     }
   };
 
@@ -91,7 +94,7 @@ function UserProfile() {
   };
   return (
     <>
-      <Container>
+      <Container className="mt-5 mb-2">
         {isUpdating ? (
           <>
             {" "}
@@ -198,7 +201,9 @@ function UserProfile() {
                     <strong>Phone:</strong> {user?.mobile}
                   </p>
                   <p>
-                    <strong>Date of Birth :</strong> {user?.dob}
+                    <strong>Date of Birth :</strong>
+                    {/* {user?.dob} */}
+                    {new Date(user?.dob).toLocaleDateString()}
                   </p>
                   <div
                     className="d-flex justify-content-center"
@@ -216,4 +221,4 @@ function UserProfile() {
   );
 }
 
-export default UserProfile;
+export default UserProfile

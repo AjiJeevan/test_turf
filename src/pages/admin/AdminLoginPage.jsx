@@ -34,9 +34,9 @@ function AdminLoginPage() {
           data: loginData,
         });
         dispatch(setUser(response?.data?.data));
-        console.log("Admin Details ..... ", response?.data?.data);
+        // console.log("Admin Details ..... ", response?.data?.data);
         toast.success("Login Successfull")
-        navigate("/admin/homepage");
+        navigate("/admin/home");
       } 
       else if (loginData.role == "manager") {
          const response = await axiosInstance({
@@ -44,14 +44,14 @@ function AdminLoginPage() {
            url: "/manager/login",
            data: loginData,
          });
-         dispatch(setUser(response?.data?.data));
-        console.log("Manager Details ..... ", response?.data?.data);
+        dispatch(setUser(response?.data?.data));
+        // console.log("Manager Details ..... ", response?.data?.data);
         toast.success("Login Successfull");
-          navigate("/manager/homepage");
+        navigate("/manager/home");
        }
        else {
         toast.error("Please provide valid information ");
-        navigate("/admin-login");
+        navigate("admin/login");
       }
       
     } catch (error) {

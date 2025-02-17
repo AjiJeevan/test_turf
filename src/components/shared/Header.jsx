@@ -9,6 +9,7 @@ import DarkMode from './DarkMode';
 
 function Header() {
 
+  const [activeTab, setActiveTab] = useState("home");
   const searchName = useSelector((state) => state.search.value);
   const dispatch = useDispatch();
   const turfList = useSelector((state) => state.turf.value);
@@ -50,28 +51,28 @@ function Header() {
       <Container>
         <Navbar bg="light" expand="lg" className="shadow-sm" fixed="top">
           <Container>
-            <Navbar.Brand href="./" className="fw-bold text-success">
+            <Navbar.Brand href="/" className="fw-bold text-success">
               TurfArena
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto my-2 my-lg-0">
                 <Link
-                  to="./"
+                  to="/"
                   className="text-dark my-2 mx-2"
                   style={{ textDecoration: "none" }}
                 >
                   Home
                 </Link>
                 <Link
-                  to="./about"
+                  to="/about"
                   className="text-dark my-2 mx-2"
                   style={{ textDecoration: "none" }}
                 >
                   About
                 </Link>
                 <Link
-                  to="./contact"
+                  to="/contact"
                   className="text-dark my-2 mx-2"
                   style={{ textDecoration: "none" }}
                 >
@@ -81,7 +82,7 @@ function Header() {
                   variant="success"
                   className="ms-3"
                   onClick={() => {
-                    navigate("./login");
+                    navigate("/login");
                   }}
                 >
                   Log in/Sign in
