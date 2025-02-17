@@ -58,6 +58,7 @@ function UserHeader() {
 
       localStorage.removeItem("token");
       dispatch(clearUser());
+      
       toast.success("You have loged out successfully")
       navigate("./");
 
