@@ -7,6 +7,7 @@ import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import DarkMode from "../shared/DarkMode";
 import { clearUser } from "../../app/features/user/userSlice";
 import toast from "react-hot-toast";
+import Cookies from 'js-cookie';
 
 function ManagerHeader() {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ function ManagerHeader() {
       console.log("logout=====", response?.data?.message);
 
       localStorage.removeItem("token");
+      Cookies.remove('token');
         dispatch(clearUser());
         toast.success("You have loged out successfully");
       navigate("manager/login");

@@ -10,7 +10,7 @@ import { clearUser, setUser } from '../app/features/user/userSlice';
 function UserLayout() {
   const userInfo = useSelector((state) => (state.user))
   
-  //  console.log("isUserAuth from User Layout====", userInfo.isUserAuth);
+   console.log("isUserAuth from User Layout====", userInfo.isUserAuth);
    const dispatch = useDispatch();
    const location = useLocation();
 
@@ -40,8 +40,8 @@ function UserLayout() {
       <section className='min-vh-100'>
         <Outlet />
       </section>
-      <section style={{backgroundImage: 'url("https://www.freewebheaders.com/wp-content/gallery/grass/cache/green-striped-grass-soccer-football-field-background-header.jpg-nggid044704-ngg0dyn-1280x375x100-00f0w010c010r110f110r010t010.jpg")',backgroundSize: 'cover'}}>
-        <footer>
+      <section>
+        <footer className='bg-success'>
           <Footer />
         </footer>
       </section>

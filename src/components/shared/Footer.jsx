@@ -8,7 +8,7 @@ function Footer() {
   const navigate = useNavigate()
   return (
     <Container>
-      <footer className=".bg-success text-white text-center py-4">
+      <footer className="text-white text-center py-4">
         <div className="container">
           <p className="mb-1">&copy; 2025 Turf Booking. All rights reserved.</p>
           <p className="mb-0">

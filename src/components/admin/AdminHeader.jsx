@@ -8,6 +8,7 @@ import { clearUser } from '../../app/features/user/userSlice';
 import { axiosInstance } from '../../config/axiosInstance';
 import DarkMode from '../shared/DarkMode';
 import toast from 'react-hot-toast';
+import Cookies from 'js-cookie';
 
 function AdminHeader() {
   const navigate = useNavigate()
@@ -24,7 +25,9 @@ function AdminHeader() {
         console.log("logout=====",response?.data?.message)
   
         localStorage.removeItem("token");
+        Cookies.remove('token');
         dispatch(clearUser());
+
         toast.success("You have loged out successfully");
         navigate("admin/login");
   
