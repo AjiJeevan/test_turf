@@ -68,7 +68,7 @@ function NewTurfPage() {
 
     useEffect(() => {
         fetchManagerList()
-        console.log("Manager list === ", managers);
+        // console.log("Manager list === ", managers);
     },[])
 
     
@@ -363,7 +363,7 @@ function NewTurfPage() {
                                     : [
                                         ...prev.availability,
                                         { slots: hour, isAvailable: true },
-                                      ]; // Add new slot if not found
+                                      ]; 
 
                                 return {
                                   ...prev,

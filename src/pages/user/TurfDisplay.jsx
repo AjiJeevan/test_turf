@@ -4,10 +4,12 @@ import Turf from '../../components/shared/Turf';
 import { setTurfLists } from '../../app/features/turf/turfSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { axiosInstance } from '../../config/axiosInstance';
+import { setSearchResult } from '../../app/features/search/searchResult';
 
 function TurfDisplay() {
   const turfList = useSelector((state) => state.turf.value);
   const dispatch = useDispatch();
+  const searchResult = useSelector((state) => state.searchResult.value)
 
   const fetchTurfs = async () => {
     try {
@@ -25,7 +27,7 @@ function TurfDisplay() {
 
   useEffect(() => {
     fetchTurfs();
-  }, []);
+  }, [turfList]);
   return (
     <>
       <Container className=' mt-5 px-5 py-3'>

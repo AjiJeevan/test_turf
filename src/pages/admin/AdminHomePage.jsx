@@ -107,7 +107,7 @@ function AdminHomePage() {
                     xl={3}
                     xxl={3}
                   >
-                    {console.log(turf)}
+                    {/* {console.log(turf)} */}
                     <section className="shadow p-3 mb-5 bg-body rounded">
                       <AdminTurf turfInfo={turf} onShowModal={handleShowModal} />
                     </section>

@@ -15,7 +15,7 @@ export const useFetch = (url, refreshState) => {
         method: "GET",
         url: url,
       });
-      console.log("Fetch Data Response ==== ", response.data);
+      // console.log("Fetch Data Response ==== ", response.data);
       // setTimeout(() => {
       //   setData(response?.data?.data);
       //   setIsloading(false);
@@ -24,7 +24,7 @@ export const useFetch = (url, refreshState) => {
       setIsloading(false);
       dispatch(setTurfLists(response?.data?.data));
     } catch (error) {
-      console.log(error);
+      console.log("Error in useFetch hook === ",error);
       setError(error);
     }
   };

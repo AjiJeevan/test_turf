@@ -51,13 +51,13 @@ function AdminLoginPage() {
        }
        else {
         toast.error("Please provide valid information ");
-        navigate("admin/login");
+        navigate("/admin/login");
       }
       
     } catch (error) {
       toast.error(error?.response?.data?.message);
       dispatch(clearUser());
-      navigate("/admin-login");
+      navigate("/admin/login");
     }
   };
 

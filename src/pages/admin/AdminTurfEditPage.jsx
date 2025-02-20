@@ -4,6 +4,7 @@ import { useFetch } from "../../hooks/useFetch";
 import { axiosInstance } from "../../config/axiosInstance";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
+import SlotsSelectionModal from "../../components/admin/SlotsSelectionModal";
 
 function AdminTurfEditPage() {
 
@@ -18,7 +19,7 @@ function AdminTurfEditPage() {
     price: "",
     facilities: [],
     sportsType: [],
-    // availability: [],
+    availability: [],
     managerId: "",
   });
   
@@ -54,9 +55,13 @@ function AdminTurfEditPage() {
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [managers, setManagers] = useState([]);
-    const [checked, setChecked] = useState(false);
-    const [loading,setLoading] = useState(true)
-    const navigate = useNavigate();
+  const [checked, setChecked] = useState(false);
+  const [loading,setLoading] = useState(true)
+  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false)
+  const [selectedSlots, setSelectedSlots] = useState()
+  const [availableSlots, setAvailableSlots] = useState()
+  const [managerId,setManagerId] = useState()
     
     
     const fetchTurfDetails = async () => {
@@ -67,7 +72,8 @@ function AdminTurfEditPage() {
           url: `turf/turf-details/${turfId}`,
         });
         setTurfData(response?.data?.data);
-        // console.log("Turf Data === ", turfData);
+        // console.log("Turf Data in fetch=== ", turfData);
+        setManagerId(response?.data?.data?.managerId?._id)
       } catch (error) {
         // console.error("Error fetching turf details:", error);
         toast.error("Error fetching turf details");
@@ -97,6 +103,7 @@ function AdminTurfEditPage() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    // console.log(name,value)
 
     if (name === "address" || name === "city") {
       setTurfData((prev) => ({
@@ -106,7 +113,14 @@ function AdminTurfEditPage() {
           [name]: value,
         },
       }));
-    } else {
+    } else if (name === "managerId") {
+      // setTurfData((prev) => ({
+      //   ...prev,
+      //   managerId: value ? value : turfData?.managerId?._id ,
+      // }));
+      setManagerId(value)
+    }
+    else {
       setTurfData((prev) => ({
         ...prev,
         [name]: value,
@@ -139,12 +153,18 @@ function AdminTurfEditPage() {
     });
   };
 
-  const handleAddNewTurf = async (e) => {
-    e.preventDefault();
+  const removeHour = (hour) => {
+    setTurfData({
+      ...turfData,
+      availability: turfData.availability.filter((h) => h !== hour),
+    });
+  };
 
+  const handleEditTurf = async (e) => {
+    e.preventDefault();
     const formData = new FormData();
     Object.entries(turfData).forEach(([key, value]) => {
-      // console.log("inside for each loop ", value)
+    
       if (key === "image") {
         if (selectedFile) {
           formData.append(key, selectedFile);
@@ -153,29 +173,36 @@ function AdminTurfEditPage() {
         }
       } else if (key === "location") {
         formData.append("location", JSON.stringify(value));
-      } else if (key === "availability") {
+      }
+      else if (key === "availability") {
         formData.append("availability", JSON.stringify(turfData.availability));
-      } else {
+      }
+      else if (key === "managerId") {
+        formData.append("managerId", managerId)
+        }
+      else {
+        
         formData.append(key, value);
       }
+      // console.log(key, value)
     });
-    console.log([...formData.entries()]);
+    // console.log([...formData.entries()]);
 
-    // try {
-    //   const response = await axiosInstance({
-    //     method: "POST",
-    //     url: `/turf/update-turf`,
-    //     data: formData,
-    //   });
+    try {
+      const response = await axiosInstance({
+        method: "POST",
+        url: `/turf/update-turf/${turfId}`,
+        data: formData,
+      });
 
-    //   // console.log("add new turf === ", response?.data?.data)
-    //   toast.success("Updated Turf successfully.....");
-    //   setTurfData({});
-    //   navigate("/admin/home");
-    // } catch (error) {
-    //   // console.log(error)
-    //   toast.error(error.response.data.message);
-    // }
+      // console.log("add new turf === ", response?.data?.data)
+      toast.success("Updated Turf successfully.....");
+      setTurfData({});
+      navigate("/admin/home");
+    } catch (error) {
+      // console.log(error)
+      toast.error(error.response.data.message);
+    }
   };
 
   const handleReset = () => {
@@ -194,12 +221,39 @@ function AdminTurfEditPage() {
     });
   };
 
+  const handleEditSlots = () => {
+    
+    const selected = turfData?.availability.map((item) => item?.slots).flat()
+    setSelectedSlots(selected)
+    // console.log("selected turf ==== ", selected)
+    const avalable = availableHours.filter((slot) => !selected.includes(slot))
+    setAvailableSlots(avalable)
+    // console.log("avalable turf ==== ", avalable)
+    setShowModal(true)
+  }
+
+  const saveSlots = async (newSlots) => {
+    if (newSlots) {
+      const newSlotObjects = newSlots.map(slots => ({
+        slots, 
+        isAvailable: true 
+      }));
+  
+      setTurfData(prev => ({
+        ...prev,
+        availability: newSlotObjects // Ensure objects, not just an array of strings
+      }));
+    }
+  
+    setShowModal(false);
+  };
+
   return (
     <>
       <Container>
         <section className="shadow p-3 mb-5 bg-body rounded">
           <h3 className="text-center">New Turf </h3>
-          <Form onSubmit={handleAddNewTurf}>
+          <Form onSubmit={handleEditTurf}>
             <Row>
               <Col md={6}>
                 <Form.Group className="mb-3">
@@ -259,7 +313,7 @@ function AdminTurfEditPage() {
                       <Form.Control
                         type="text"
                         name="city"
-                        value={turfData.location.city}
+                        value={turfData?.location?.city}
                         onChange={handleChange}
                         required
                       />
@@ -273,7 +327,7 @@ function AdminTurfEditPage() {
                       <Form.Control
                         type="number"
                         name="price"
-                        value={turfData.price}
+                        value={turfData?.price}
                         onChange={handleChange}
                         required
                       />
@@ -294,8 +348,8 @@ function AdminTurfEditPage() {
                     required
                   >
                     <option value="">Please select the manager</option>
-                    {managers.map((manager) => (
-                      <option key={manager._id} value={manager._id}>
+                    {managers?.map((manager) => (
+                      <option key={manager?._id} value={manager?._id}>
                         {manager.fname}
                       </option>
                     ))}
@@ -313,7 +367,7 @@ function AdminTurfEditPage() {
                       type="checkbox"
                       label={facility}
                       value={facility}
-                      checked={turfData.facilities.includes(facility)}
+                      checked={turfData?.facilities?.includes(facility)}
                       onChange={(e) => handleCheckboxChange(e, "facilities")}
                     />
                   ))}
@@ -332,7 +386,7 @@ function AdminTurfEditPage() {
                       type="checkbox"
                       label={sport}
                       value={sport}
-                      checked={turfData.sportsType.includes(sport)}
+                      checked={turfData?.sportsType?.includes(sport)}
                       onChange={(e) => handleCheckboxChange(e, "sportsType")}
                     />
                   ))}
@@ -340,60 +394,32 @@ function AdminTurfEditPage() {
               </Col>
             </Row>
             <Row>
-              {/* <Col>
+              <Col>
                 <Form.Group className="mb-3">
-                  <Form.Label>Available Time</Form.Label>
-
-                  <div>
-                        {availableHours.map((hour, index) => {
-                          const isSelected = (turfData?.availability ?? []).some((item) => {
-                            return item.slots.includes(hour) && item.isAvailable;
-                          });
-
-                          return (
-                            <Button
-                              key={index}
-                              className="mb-2 me-1"
-                              type="button"
-                              variant={
-                                isSelected ? "success" : "outline-success"
-                              }
-                              value={hour}
-                              onClick={() =>
-                                setTurfData((prev) => {
-                                  const updatedAvailability =
-                                    prev.availability.some(
-                                      (item) => item.slots === hour
-                                    )
-                                      ? prev.availability.map((item) =>
-                                          item.slots === hour
-                                            ? {
-                                                ...item,
-                                                isAvailable: !item.isAvailable,
-                                              }
-                                            : item
-                                        )
-                                      : [
-                                          ...prev.availability,
-                                          { slots: hour, isAvailable: true },
-                                        ]; // Add new slot if not found
-  
-                                  return {
-                                    ...prev,
-                                    availability: updatedAvailability,
-                                  };
-                                })
-                              }
-                            >
-                              {hour}
-                            </Button>
-                          );
-                        })}
-                  </div>
+                  <Form.Label>Available Slots : </Form.Label>
+                  {turfData?.availability?.length > 0 ? (
+                    turfData?.availability?.map((hour, index) => (
+                        <Button key={index} variant="success"
+                          className="mb-1 mx-1 px-3 py-2 w-32 text-center"
+                          style={{ minWidth: "120px", textAlign: "center" }}>
+                          {hour.slots}
+                        </Button>
+                    ))
+                  ) : (
+                  <p className="text-danger">No available hours</p>
+                  )}
+                 
                 </Form.Group>
-              </Col> */}
+              </Col>
             </Row>
             <div className="d-flex justify-content-center gap-3">
+              <Button variant="warning" onClick={handleEditSlots}>Edit Slots</Button>
+              <SlotsSelectionModal
+                show={showModal}
+                selectedSlots={selectedSlots}
+                availableSlots = {availableSlots}
+                handleClose={() => setShowModal(false)}
+                onSave={saveSlots}/>
               <Button variant="success" type="submit">
                 Add Turf
               </Button>

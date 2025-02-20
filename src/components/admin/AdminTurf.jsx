@@ -44,7 +44,9 @@ function AdminTurf({ turfInfo, onShowModal }) {
             >
               <BsEye />
             </Button>
-            <Button variant="primary" className="bt-sm me-2">
+            <Button variant="primary" className="bt-sm me-2" onClick={() => {
+                              navigate(`/admin/turf-edit/${turfInfo?._id}`);
+                          }}>
               <BsPencilSquare />
             </Button>
             <Button

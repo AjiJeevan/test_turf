@@ -33,6 +33,7 @@ import AdminTurfDetailsPage from "../pages/admin/AdminTurfDetailsPage";
 import AdminTurfEditPage from "../pages/admin/AdminTurfEditPage";
 import PaymentSuccess from "../pages/user/PaymentSuccess";
 import PaymentError from "../pages/user/PaymentError";
+import ManagerDetails from "../pages/admin/ManagerDetails";
 
 
 export const router = createBrowserRouter([
@@ -81,6 +82,12 @@ export const router = createBrowserRouter([
           {
             path: "user-search",
             element: <SearchResult />,
+            children: [
+              {
+                path: "turf-details/:id",
+                element : <TurfDetailsPage />
+              }
+            ]
           },
           {
             path: "login",
@@ -159,6 +166,10 @@ export const router = createBrowserRouter([
             path: "turf-edit/:id",
             element: <AdminTurfEditPage />,
           },
+          {
+            path: "manager-details/:id",
+            element : <ManagerDetails/>
+          }
         ],
       },
     ],

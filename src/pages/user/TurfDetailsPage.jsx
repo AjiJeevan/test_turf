@@ -195,7 +195,7 @@ function TurfDetailsPage() {
               ) : availableSlots?.length === 0 ? (
                   <>
                     <div>
-                      
+                      <p className="text-danger">No Slots Availablet</p>
                       </div>
                   
                 </>

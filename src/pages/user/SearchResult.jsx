@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import Turf from '../../components/shared/Turf';
-import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import Contacts from '../../components/shared/Contacts';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,22 +21,14 @@ function SearchResult() {
     return (
       <>
         <section></section>
-        { !searchResult ? <></> : 
+        { !searchResult ? <><p className='text-danger'>No Turfs Found</p></> : 
         <section id="section-search">
           <Container className="mt-5 pt-5">
             <Row>
               {searchResult?.map((turf, index) => {
                 return (
-                  <Col
-                    key={turf?._id}
-                    xs={12}
-                    sm={12}
-                    md={6}
-                    lg={4}
-                    xl={3}
-                    xxl={3}
-                  >
-                    <Turf turfInfo={turf} />
+                  <Col key={turf?._id} xs={12} sm={12} md={6} lg={4} xl={3} xxl={3} >
+                  <Turf turfInfo={turf} /> 
                   </Col>
                 );
                 
@@ -57,9 +49,9 @@ function SearchResult() {
           )}
         </section>
         }
-        <section id="contact">
+        {/* <section id="contact">
           <Contacts />
-        </section>
+        </section> */}
       </>
     );
 }

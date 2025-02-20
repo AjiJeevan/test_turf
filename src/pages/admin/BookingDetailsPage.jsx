@@ -134,15 +134,15 @@ function BookingDetailsPage() {
                             </thead>
                             <tbody>
                               {bookingsApproved.map((booking) => (
-                                <tr key={booking._id}>
-                                  <td>{booking.turfId.name}</td>
-                                  <td>{booking.userId.fname}</td>
+                                <tr key={booking?._id}>
+                                  <td>{booking?.turfId?.name}</td>
+                                  <td>{booking?.userId?.fname}</td>
                                   <td>
                                     {new Date(
-                                      booking.date
+                                      booking?.date
                                     ).toLocaleDateString()}
                                   </td>
-                                  <td>{booking.totalPrice}</td>
+                                  <td>{booking?.totalPrice}</td>
                                 </tr>
                               ))}
                             </tbody>
@@ -178,15 +178,15 @@ function BookingDetailsPage() {
                             </thead>
                             <tbody>
                               {bookingsRejected.map((booking) => (
-                                <tr key={booking._id}>
-                                  <td>{booking.turfId.name}</td>
-                                  <td>{booking.userId.fname}</td>
+                                <tr key={booking?._id}>
+                                  <td>{booking?.turfId?.name}</td>
+                                  <td>{booking?.userId?.fname}</td>
                                   <td>
                                     {new Date(
-                                      booking.date
+                                      booking?.date
                                     ).toLocaleDateString()}
                                   </td>
-                                  <td>{booking.totalPrice}</td>
+                                  <td>{booking?.totalPrice}</td>
                                 </tr>
                               ))}
                             </tbody>

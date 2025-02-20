@@ -15,16 +15,16 @@ function ManagerBookingPage() {
         method: "GET",
         url: `/booking/all-boooking-manager`,
       })
-      console.log(response?.data?.data)
-      const pending = response?.data?.data?.filter((booking) => booking.requestStatus === "pending")
-      const approved = response?.data?.data?.filter((booking) => booking.requestStatus === "approved")
-      const rejected = response?.data?.data?.filter((booking) => booking.requestStatus === "rejected")
+      // console.log(response?.data?.data)
+      const pending = response?.data?.data?.filter((booking) => (booking.requestStatus === "pending" && booking.status === "confirmed") )
+      const approved = response?.data?.data?.filter((booking) => (booking.requestStatus === "approved" && booking.status === "confirmed"))
+      const rejected = response?.data?.data?.filter((booking) => (booking.requestStatus === "rejected" || booking.status === "cancelledd") )
 
       setBookingsPending(pending)
       setBookingsApproved(approved)
       setBookingsRejected(rejected)
       
-      console.log(bookingsPending)
+      // console.log(bookingsPending)
     
   } catch (error) {
     console.log(error)
@@ -96,7 +96,7 @@ function ManagerBookingPage() {
                       <Nav.Link eventKey="approved">Approved</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                      <Nav.Link eventKey="rejected">Rejected</Nav.Link>
+                      <Nav.Link eventKey="rejected">Rejected / Cancelled</Nav.Link>
                     </Nav.Item>
                   </Nav>
 
@@ -105,7 +105,10 @@ function ManagerBookingPage() {
                       {bookingsPending?.length > 0 ? (
                         <>
                           <h3 className="text-center">Pending Bookings</h3>
-                          <Table responsive className="text-center">
+                          <Table responsive
+                            striped
+                            bordered
+                            hover className="text-center">
                             <thead>
                               <tr>
                                 <th>Turf</th>
@@ -169,7 +172,10 @@ function ManagerBookingPage() {
                       {bookingsApproved?.length > 0 ? (
                         <>
                           <h3 className="text-center">Approved Bookings</h3>
-                          <Table responsive className="text-center">
+                          <Table responsive
+                            striped
+                            bordered
+                            hover className="text-center">
                             <thead>
                               <tr>
                                 <th>Turf</th>
@@ -207,13 +213,17 @@ function ManagerBookingPage() {
                       {bookingsRejected?.length > 0 ? (
                         <>
                           <h3 className="text-center">Rejected Bookings</h3>
-                          <Table responsive className="text-center">
+                          <Table responsive
+                            striped
+                            bordered
+                            hover className="text-center">
                             <thead>
                               <tr>
                                 <th>Turf</th>
                                 <th>User</th>
                                 <th>Date</th>
                                 <th>Price</th>
+                                <th>Status</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -227,6 +237,7 @@ function ManagerBookingPage() {
                                     ).toLocaleDateString()}
                                   </td>
                                   <td>{booking.totalPrice}</td>
+                                  <td>{booking.requestStatus === "rejected" ? <p className='text-danger'>Rejected</p>:<p className='text-warning'>User Cancelled</p>}</td>
                                 </tr>
                               ))}
                             </tbody>

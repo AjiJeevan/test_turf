@@ -3,17 +3,21 @@ import { Button, Card, Col, Container, Form, Image, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import { axiosInstance } from '../../config/axiosInstance';
 import toast from 'react-hot-toast';
+import moment from 'moment';
 
 function Profile() {
     const userInfo = useSelector((state) => (state.user))
-    const [user, setUser] = useState({})
-    console.log("User Info ====== ", user);
+  const [user, setUser] = useState({})
+  const [error,setError]=useState("")
+    // console.log("User Info ====== ", user);
     const dispatch = useDispatch()
     const [isEditing, setIsEdting] = useState(false)
     const [previewImage, setPreviewImage] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
     const role = useSelector((state) => (state.user.role))
-    console.log("Role ===== ", role)
+  // console.log("Role ===== ", role)
+  const maxDate = moment().subtract(18, "years").format("YYYY-MM-DD");
+    
 
 
 
@@ -25,7 +29,7 @@ function Profile() {
                 method: "GET",
                 url: "/admin/profile",
               });
-              console.log("Fetch Data Response ==== ", response.data)
+              // console.log("Fetch Data Response ==== ", response.data)
                 setUser(response?.data?.data);
             } catch (error) {
               console.log(error)
@@ -51,7 +55,15 @@ function Profile() {
       }
     };
 
-    const handleSaveProfile = async () => {
+  const handleSaveProfile = async () => {
+    const userAge = moment().diff(moment(user?.dob, "YYYY-MM-DD"), "years");
+
+    if (userAge < 18) {
+      setError("You must be at least 18 years old.");
+      return;
+    }
+    setError(""); 
+
       const formData = new FormData();
       formData.append("fname", user.fname);
       formData.append("lname", user.lname);
@@ -62,7 +74,7 @@ function Profile() {
         formData.append("profilePic", selectedFile);
       }
 
-        console.log([...formData.entries()]);
+        // console.log([...formData.entries()]);
 
         try {
             const response = await axiosInstance.post(
@@ -73,11 +85,11 @@ function Profile() {
               }
             );
             
-            console.log("response ==== ", response?.data?.data)
+            // console.log("response ==== ", response?.data?.data)
             setIsEdting(false)
             dispatch(setUser(response?.data?.data))
             toast.success("Profile Updated Successfully")
-
+            fetchData()
       } catch (error) {
             console.log(error);
             // toast.error("Error in updating profile")
@@ -149,11 +161,13 @@ function Profile() {
                     <Form.Group className="mb-3">
                       <Form.Label className="fw-bold">Phone</Form.Label>
                       <Form.Control
-                        type="text"
+                        type="number"
                         name="mobile"
                         value={user.mobile}
                         onChange={handleInputChange}
                         placeholder="Enter phone number"
+                        minLength={10}
+                        maxLength={10}
                       />
                     </Form.Group>
                     <Form.Group className="mb-3">
@@ -161,10 +175,12 @@ function Profile() {
                       <Form.Control
                         type="date"
                         name="dob"
-                        value={user.dob}
+                        value={user?.dob}
                         onChange={handleInputChange}
                         placeholder="Enter your date of birth"
+                        max={maxDate}
                       />
+                      {error && <p style={{ color: "red" }}>{error}</p>}
                     </Form.Group>
                   </Form>
                   <div className="d-flex justify-content-between">
@@ -193,7 +209,7 @@ function Profile() {
                     {new Date(user?.dob).toLocaleDateString()}
                   </p>
                   <p>
-                    <strong>Role :</strong> {userInfo?.role}
+                    <strong>Role :</strong> {user?.role}
                   </p>
                   <div
                     className="d-flex justify-content-center"

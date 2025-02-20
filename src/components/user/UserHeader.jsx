@@ -18,7 +18,7 @@ function UserHeader() {
 
     const handleSearchChange = (event) => {
       try {
-        console.log(event.target.value);
+        // console.log(event.target.value);
         dispatch(setSearchValue(event.target.value));
       } catch (error) {
         console.log(`ERROR in handleSearchChange ==== ${error}`);
@@ -27,21 +27,28 @@ function UserHeader() {
 
     const searchList = () => {
       try {
-        console.log(searchName);
+        // console.log(searchName);
         if (!searchName) {
-          alert("Please Provide a value to search");
+          toast.error("Please Provide a value to search");
           return;
         }
 
         const filteredTurfs = turfList.filter((turf) =>
         turf.name.toLowerCase().includes(searchName)
         );
+
+        if (filteredTurfs.length === 0) {
+          toast.error("No Turfs Found")
+          dispatch(setSearchValue(""));
+          return
+        }
         
-        console.log(filteredTurfs);
+        // console.log(filteredTurfs);
         dispatch(setSearchResult(filteredTurfs));
         dispatch(setSearchValue(""));
 
-        navigate("/user/user-search");
+         navigate("/user/user-search");
+        // navigate("/user");
 
       } catch (error) {
         console.log(`ERROR in searchList ==== ${error}`);
@@ -55,12 +62,11 @@ function UserHeader() {
               url: "/user/logout",
       });
       
-      console.log("logout=====",response?.data?.message)
+      // console.log("logout=====",response?.data?.message)
 
       localStorage.removeItem("token");
       Cookies.remove('token');
-
-      dispatch(clearUser());
+      
 
       toast.success("You have loged out successfully")
       navigate("./");
@@ -69,6 +75,9 @@ function UserHeader() {
       console.log(error)
       toast.error(error?.response?.data?.message)
     }
+    finally {
+      dispatch(clearUser());
+    }
   }
 
   return (
@@ -76,10 +85,13 @@ function UserHeader() {
       <Container>
         <Navbar bg="light" expand="lg" className="shadow-sm" fixed="top">
           <Container>
+            <div>
             <Navbar.Brand href="./" className="fw-bold text-success">
               TurfArena
             </Navbar.Brand>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            </div>
+            <div>
+              <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto my-2 my-lg-0">
                 <Link
@@ -111,7 +123,10 @@ function UserHeader() {
                   Log Out
                 </Button>
               </Nav>
-              <Form className="d-flex">
+            </Navbar.Collapse>
+            </div>
+            <div>
+            <Form className="d-flex">
                 <Form.Control
                   type="search"
                   placeholder="Search"
@@ -125,7 +140,8 @@ function UserHeader() {
                 </Button>
                 <DarkMode />
               </Form>
-            </Navbar.Collapse>
+            </div>
+            
           </Container>
         </Navbar>
       </Container>

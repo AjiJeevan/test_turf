@@ -6,6 +6,8 @@ import { setSearchValue } from '../../app/features/search/searchSlice';
 import { setSearchResult } from '../../app/features/search/searchResult';
 import { useNavigate } from 'react-router-dom';
 import DarkMode from './DarkMode';
+import toast from 'react-hot-toast';
+import { setTurfLists } from '../../app/features/turf/turfSlice';
 
 function Header() {
 
@@ -13,6 +15,7 @@ function Header() {
   const searchName = useSelector((state) => state.search.value);
   const dispatch = useDispatch();
   const turfList = useSelector((state) => state.turf.value);
+  // const [turfList,setTurfList] = useState({})
   const navigate = useNavigate()
 
 
@@ -24,22 +27,50 @@ function Header() {
     }
     
   }
+  const fetchTurfs = async () => {
+      try {
+        const response = await axiosInstance({
+          method: "GET",
+          url: "/turf/all-turf",
+        });
+        // console.log(response.data)
+        dispatch(setTurfLists(response?.data?.data));
+        // setTurfLists(response?.data?.data)
+        
+      } catch (error) {
+        toast.error("Error in fetching turfs")
+          console.log(error)
+      }
+  }
+  
+  useEffect(() => {
+    fetchTurfs
+  },[])
+
+  
 
   const searchList = () => {
     try {
-      console.log(searchName);
+      // console.log(searchName);
       if (!searchName) {
-        alert("Please Provide a value to search")
+        toast.error("Please Provide a value to search")
         return
       }
-      const filteredTurfs = turfList.filter((turf) =>
+      const filteredTurfs = turfList?.filter((turf) =>
         turf.name.toLowerCase().includes(searchName)
       );
-      console.log(filteredTurfs);
+      // console.log(filteredTurfs);
+      if (filteredTurfs.length == 0)
+      {
+        toast.error("No Turf Found")
+        dispatch(setSearchValue(""));
+        return
+      }
       dispatch(setSearchResult(filteredTurfs));
       dispatch(setSearchValue(""));
 
       navigate("/search");
+      // navigate("/home");
 
     } catch (error) {
       console.log(`ERROR in searchList ==== ${error}`);
@@ -51,9 +82,12 @@ function Header() {
       <Container>
         <Navbar bg="light" expand="lg" className="shadow-sm" fixed="top">
           <Container>
-            <Navbar.Brand href="/" className="fw-bold text-success">
-              TurfArena
-            </Navbar.Brand>
+            <div>
+                <Navbar.Brand href="/" className="fw-bold text-success">
+                  TurfArena
+                </Navbar.Brand>
+            </div>
+            <div>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto my-2 my-lg-0">
@@ -88,7 +122,10 @@ function Header() {
                   Log in/Sign in
                 </Button>
               </Nav>
-              <Form className="d-flex">
+              </Navbar.Collapse>
+            </div>
+            <div>
+            <Form className="d-flex">
                 <Form.Control
                   type="search"
                   placeholder="Search"
@@ -102,7 +139,8 @@ function Header() {
                 </Button>
                 <DarkMode />
               </Form>
-            </Navbar.Collapse>
+            </div>
+            
           </Container>
         </Navbar>
       </Container>

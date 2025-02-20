@@ -21,7 +21,7 @@ function ManagerHeader() {
         url: "/manager/logout",
       });
 
-      console.log("logout=====", response?.data?.message);
+      // console.log("logout=====", response?.data?.message);
 
       localStorage.removeItem("token");
       Cookies.remove('token');

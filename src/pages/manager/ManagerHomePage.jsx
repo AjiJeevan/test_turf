@@ -10,7 +10,7 @@ function ManagerHomePage(props) {
   const userInfo = useSelector((state) => (state.user))
   const [refreshState, setRefreshState] = useState(false);
   const [turfList, isLoading, error] = useFetch("/manager/assigned-turf",refreshState);
-  console.log("Assigned Turfs ===== ", turfList)
+  // console.log("Assigned Turfs ===== ", turfList)
 
   const handleViewDetails = async () => {
     try {
@@ -46,7 +46,7 @@ function ManagerHomePage(props) {
                     xl={3}
                     xxl={3}
                   >
-                    {console.log(turf)}
+                    {/* {console.log(turf)} */}
                     <section className="shadow p-3 mb-5 bg-body rounded">
                       <Turf turfInfo={turf} />
                     </section>

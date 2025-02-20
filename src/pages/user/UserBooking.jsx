@@ -95,7 +95,7 @@ function UserBooking() {
                       </tr>
                     </thead>
                     <tbody>
-                      {upcomingBookings.length > 0 ? (
+                      {upcomingBookings?.length > 0 ? (
                         <>
                           {upcomingBookings?.map((booking, index) => {
                             return (
@@ -110,7 +110,7 @@ function UserBooking() {
                                 <td className="text-center">
                                   {booking?.requestStatus === "pending" ? (
                                     <>
-                                      <Button variant="danger" size="sm" onClick={() => { handleCancelBooking(booking._id,booking.turfId._id) }}>
+                                      <Button variant="danger" size="sm" onClick={() => { handleCancelBooking(booking?._id,booking?.turfId?._id) }}>
                                         Cancel
                                       </Button>
                                     </>

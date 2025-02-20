@@ -8,12 +8,13 @@ function LoginPage() {
 
   return (
     <>
-      <Container className='pt-5 mt-5'>
+      <Container className='pt-5 mt-5' fluid="md" >
         <Row className="main-section">
-          <Col className="text-center align-self-start">
+          <Col xs={12} md={6} className="text-center align-self-start">
             <h1 className="text-white">Make Every Match Memorable</h1>
             <Button
               variant="success"
+              className='mb-2'
               onClick={() => {
                 navigate("/sign-up");
               }}
@@ -21,10 +22,10 @@ function LoginPage() {
               SIGN UP NOW
             </Button>
           </Col>
-          <Col>
-            <div>
-              <Login />
-            </div>
+          <Col xs={12} md={6} className="align-self-center justify-content-center mb-2">
+            <div className="w-100 " style={{ maxWidth: "400px" }}>
+            <Login />
+          </div>
           </Col>
         </Row>
       </Container>

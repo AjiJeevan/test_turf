@@ -4,6 +4,8 @@ import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { data, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../config/axiosInstance';
+import moment from 'moment';
+
 
 function NewManager() {
     const formData = new FormData();
@@ -20,7 +22,8 @@ function NewManager() {
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
     });
 
-    const [error, setError] = useState("");
+  const [error, setError] = useState("");
+  const maxDate = moment().subtract(18, "years").format("YYYY-MM-DD");
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -41,7 +44,14 @@ function NewManager() {
       registerNewUser(managerData);
     };
 
-    const registerNewUser = async (managerData) => {
+  const registerNewUser = async (managerData) => {
+    const userAge = moment().diff(moment(managerData?.dob, "YYYY-MM-DD"), "years");
+
+    if (userAge < 18) {
+      setError("You must be at least 18 years old.");
+      return;
+    }
+    setError(""); 
         try {
           formData.append("fname", managerData.fname);
           formData.append("lname", managerData.lname);
@@ -136,6 +146,7 @@ function NewManager() {
                     name="dob"
                     value={managerData?.dob}
                     onChange={handleChange}
+                    max={maxDate}
                     required
                   />
                 </Form.Group>

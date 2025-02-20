@@ -16,10 +16,10 @@ function Contacts() {
         setError("Please provide all the fields")
         return
       }
-      console.log(email, enquiry)
+      // console.log(email, enquiry)
       setError("")
       const response = await axiosInstance.post("enquiry/new-enquiry", { email, enquiry });
-      console.log(response.data.data)
+      // console.log(response.data.data)
       setEmail("")
       setEnquiry("")
       alert(response.data.message)

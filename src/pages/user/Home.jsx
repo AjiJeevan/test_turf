@@ -25,15 +25,29 @@ function Home() {
         url: "/turf/all-turf",
       });
       // console.log(response.data)
-      dispatch(setTurfLists(response?.data?.data.slice(0, 4)));
+      dispatch(setTurfLists(response?.data?.data));
       
     } catch (error) {
         console.log(error)
     }
   }
 
+  const updateBookig = async () => {
+    try {
+      const response = await axiosInstance({
+        method: "PUT",
+        url : "/booking/completed-booking"
+      })
+      // console.log(response?.data?.data)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     fetchTurfs()
+    updateBookig()
   }, [])
 
   const handleLogin = async () => {

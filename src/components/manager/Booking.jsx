@@ -13,7 +13,7 @@ function Booking(props) {
             method: "GET",
             url: `/booking/booking-details/${id}`,
           });
-            console.log(`Booking details of turf ${id} ==== `, response?.data?.data)
+            // console.log(`Booking details of turf ${id} ==== `, response?.data?.data)
             if (response?.data?.data.length == 0)
             {
                 alert("No Booking Available")

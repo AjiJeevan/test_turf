@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../config/axiosInstance";
 import { useDispatch } from "react-redux";
 import { clearUser, setUser } from "../../app/features/user/userSlice";
+import moment from "moment";
 
 function SignUpPage() {
   const formData = new FormData();
@@ -21,6 +22,7 @@ function SignUpPage() {
     });
 
   const [error, setError] = useState("");
+  const maxDate = moment().subtract(18, "years").format("YYYY-MM-DD");
   const navigate = useNavigate()
 
     const handleChange = (e) => {
@@ -29,6 +31,13 @@ function SignUpPage() {
 
     const handleSubmit = (e) => {
       e.preventDefault();
+      const userAge = moment().diff(moment(userData?.dob, "YYYY-MM-DD"), "years");
+
+    if (userAge < 18) {
+      setError("You must be at least 18 years old.");
+      return;
+    }
+    setError(""); 
 
       if (userData.password !== userData.confirmPassword) {
         setError("Passwords do not match!");
@@ -130,6 +139,7 @@ function SignUpPage() {
                       name="dob"
                       value={userData.dob}
                       onChange={handleChange}
+                      max={maxDate}
                       required
                     />
                   </Form.Group>

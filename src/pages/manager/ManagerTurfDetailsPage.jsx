@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 function ManagerTurfDetailsPage() {
   const [turfData, setTurfData] = useState();
   const turfId = useParams().id;
-  console.log("TurfId  === ", turfId);
+  // console.log("TurfId  === ", turfId);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -26,7 +26,7 @@ function ManagerTurfDetailsPage() {
         url: `turf/turf-details/${turfId}`,
       });
       setTurfData(response?.data?.data);
-      console.log("Turf Data === ", turfData);
+      // console.log("Turf Data === ", turfData);
     } catch (error) {
       console.error("Error fetching turf details:", error);
       toast.error("Error fetching turf details");

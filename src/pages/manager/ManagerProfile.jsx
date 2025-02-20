@@ -3,17 +3,20 @@ import {Button,Card,Col,Container,Form,Image,Row,} from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { axiosInstance } from "../../config/axiosInstance";
 import toast from "react-hot-toast";
+import moment from "moment";
 
 function ManagerProfile() {
   const userInfo = useSelector((state) => state.user);
+  const [error, setError] = useState("");
   const [user, setUser] = useState({});
-  console.log("User Info ====== ", user);
+  // console.log("User Info ====== ", user);
   const dispatch = useDispatch();
   const [isEditing, setIsEdting] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const role = useSelector((state) => state.user.role);
-  console.log("Role ===== ", role);
+  const maxDate = moment().subtract(18, "years").format("YYYY-MM-DD");
+  // console.log("Role ===== ", role);
 
   const fetchData = async () => {
     try {
@@ -21,7 +24,7 @@ function ManagerProfile() {
         method: "GET",
         url: "/manager/profile",
       });
-      console.log("Fetch Data Response ==== ", response.data);
+      // console.log("Fetch Data Response ==== ", response.data);
       setUser(response?.data?.data);
     } catch (error) {
       console.log(error);
@@ -48,6 +51,15 @@ function ManagerProfile() {
   };
 
   const handleSaveProfile = async () => {
+
+    const userAge = moment().diff(moment(user?.dob, "YYYY-MM-DD"), "years");
+    if (userAge < 18) {
+      setError("You must be at least 18 years old.");
+      return;
+    }
+    setError("")
+
+
     const formData = new FormData();
     formData.append("fname", user.fname);
     formData.append("lname", user.lname);
@@ -58,7 +70,7 @@ function ManagerProfile() {
       formData.append("profilePic", selectedFile);
     }
 
-    console.log([...formData.entries()]);
+    // console.log([...formData.entries()]);
 
     try {
       const response = await axiosInstance.post(
@@ -69,7 +81,7 @@ function ManagerProfile() {
         }
       );
 
-      console.log("response ==== ", response?.data?.data);
+      // console.log("response ==== ", response?.data?.data);
       setIsEdting(false);
       dispatch(setUser(response?.data?.data));
       toast.success("Profile Updated Successfully");
@@ -144,11 +156,13 @@ function ManagerProfile() {
                     <Form.Group className="mb-3">
                       <Form.Label className="fw-bold">Phone</Form.Label>
                       <Form.Control
-                        type="text"
+                        type="number"
                         name="mobile"
                         value={user.mobile}
                         onChange={handleInputChange}
                         placeholder="Enter phone number"
+                        minLength={10}
+                        maxLength={10}
                       />
                     </Form.Group>
                     <Form.Group className="mb-3">
@@ -159,8 +173,11 @@ function ManagerProfile() {
                         value={user.dob}
                         onChange={handleInputChange}
                         placeholder="Enter your date of birth"
+                        max={maxDate}
+                        
                       />
                     </Form.Group>
+                    {error && <p style={{ color: "red" }}>{error}</p>}
                   </Form>
                   <div className="d-flex justify-content-between">
                     <Button variant="success" onClick={handleSaveProfile}>
@@ -183,10 +200,10 @@ function ManagerProfile() {
                     <strong>Phone:</strong> {user?.mobile}
                   </p>
                   <p>
-                    <strong>Date of Birth :</strong> {user?.dob}
+                    <strong>Date of Birth :</strong> {new Date(user?.dob).toLocaleDateString()}
                   </p>
                   <p>
-                    <strong>Role :</strong> {userInfo?.role}
+                    <strong>Role :</strong> {user?.role}
                   </p>
                   <div
                     className="d-flex justify-content-center"

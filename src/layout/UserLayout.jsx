@@ -10,7 +10,7 @@ import { clearUser, setUser } from '../app/features/user/userSlice';
 function UserLayout() {
   const userInfo = useSelector((state) => (state.user))
   
-   console.log("isUserAuth from User Layout====", userInfo.isUserAuth);
+  //  console.log("isUserAuth from User Layout====", userInfo.isUserAuth);
    const dispatch = useDispatch();
    const location = useLocation();
 
@@ -21,7 +21,7 @@ function UserLayout() {
         method: "GET",
         url: "/user/check-user",
       });
-      dispatch(setUser());
+      dispatch(setUser(response?.data?.data));
     } catch (error) {
       dispatch(clearUser());
       console.log(error);

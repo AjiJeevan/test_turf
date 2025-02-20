@@ -19,7 +19,7 @@ function AdminLayout() {
           method: "GET",
           url: "/admin/check-user",
         });
-        dispatch(setUser());
+        dispatch(setUser(response?.data?.data));
         // console.log("isUserAuth from Admin Layout====", userInfo.isUserAuth);
       } catch (error) {
         dispatch(clearUser());
