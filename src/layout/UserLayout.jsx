@@ -15,7 +15,8 @@ function UserLayout() {
    const location = useLocation();
 
   const checkUser = async () => {
-    // console.log("Location=======",location)
+    console.log("is user Auth ==== " , userInfo.isUserAuth)
+    console.log("Location=======",location)
     try {
       const response = await axiosInstance({
         method: "GET",
@@ -29,13 +30,15 @@ function UserLayout() {
   };
 
   useEffect(() => {
-    checkUser();
-  }, [location.pathname]);
+    if (!userInfo.isUserAuth) {
+      checkUser();
+    }
+  }, []);
     
   return (
     <div>
       <section>
-        <header>{!userInfo.isUserAuth ? <Header /> : <UserHeader />}</header>
+      <header>{userInfo.isUserAuth ? <UserHeader /> : <Header />}</header>
       </section>
       <section className='min-vh-100'>
         <Outlet />

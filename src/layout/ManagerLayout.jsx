@@ -19,7 +19,7 @@ function ManagerLayout() {
         url: "/manager/check-user",
       });
       dispatch(setUser(response?.data?.data));
-      // console.log("isUserAuth from Manager Layout====", userInfo.isUserAuth);
+      console.log("isUserAuth from Manager Layout====", userInfo.isUserAuth);
     } catch (error) {
       dispatch(clearUser());
       console.log(error);
