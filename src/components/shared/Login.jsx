@@ -42,13 +42,14 @@ function Login() {
               url: "/user/login",
               data: loginData,
             });
-          // console.log(" user data==== ",response.data.data)
-  
-          dispatch(setUser(response?.data?.data))
-          
-          toast.success("Login Successfull")
-          navigate(user.profileRoute)
+          console.log(" user data==== ",response.data.data)
             
+          if (response?.data?.token) {
+            dispatch(setUser(response?.data?.data))
+          
+            toast.success("Login Successfull")
+            navigate(user.profileRoute) 
+          } 
         } catch (error) {
           console.log(error)
           toast.error("Error in login")

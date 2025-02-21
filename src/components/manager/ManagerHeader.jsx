@@ -25,8 +25,9 @@ function ManagerHeader() {
 
       localStorage.removeItem("token");
       Cookies.remove('token');
-        dispatch(clearUser());
-        toast.success("You have loged out successfully");
+      dispatch(clearUser());
+      
+      toast.success("You have loged out successfully");
        navigate("manager/login");
      
     } catch (error) {
