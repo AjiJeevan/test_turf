@@ -3,6 +3,7 @@ import { Col, Container, Form, Row } from 'react-bootstrap';
 import "../../styles/contact.css";
 import Button from "react-bootstrap/Button";
 import { axiosInstance } from '../../config/axiosInstance';
+import toast from 'react-hot-toast';
 
 function Contacts() {
   const [email, setEmail] = useState("");
@@ -22,10 +23,11 @@ function Contacts() {
       // console.log(response.data.data)
       setEmail("")
       setEnquiry("")
-      alert(response.data.message)
+      toast.success(response.data.message)
 
     } catch (error) {
       console.log(error)
+      toast.error("Error in sending enquiry")
     }
   }
   return (
