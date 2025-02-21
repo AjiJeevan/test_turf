@@ -27,7 +27,8 @@ function ManagerHeader() {
       Cookies.remove('token');
         dispatch(clearUser());
         toast.success("You have loged out successfully");
-      navigate("manager/login");
+       navigate("manager/login");
+     
     } catch (error) {
         console.log(error);
         toast.error(error?.response?.data?.message);

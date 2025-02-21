@@ -3,12 +3,17 @@ import { Badge, Button, Container, Spinner, Tab, Table, Tabs } from "react-boots
 import { axiosInstance } from "../../config/axiosInstance";
 import toast from "react-hot-toast";
 import { loadStripe } from "@stripe/stripe-js";
+import { Link } from "react-router-dom";
+import ReviewModal from "../../components/user/ReviewModal";
 
 function UserBooking() {
   const [key, setKey] = useState("upcoming");
   const [loading, setLoading] = useState(false);
   const [upcomingBookings, setUpcomingBookings] = useState([]);
   const [pastBookings, setPastBookings] = useState([]);
+  const [review, setReview] = useState()
+  const [showModal, setShowModal] = useState(false);
+  const [turfId,setTurfId]= useState()
   
   const fetchBooking = async () => {
     try {
@@ -28,7 +33,11 @@ function UserBooking() {
 
   useEffect(() => {
     fetchBooking()
-  }, [])
+    // if (review && review._id) {
+    //   console.log("Review === ", review?._id)
+    //   setShowModal(true);
+    // }
+  }, [review])
   
   const handleCancelBooking = async (bookingId,turfId) => {
     try {
@@ -69,6 +78,23 @@ function UserBooking() {
       
     }
   };
+
+  const handleReview = async (id) => {
+    try {
+      console.log("Passed TurfId", id)
+      setTurfId(turfId);
+      // console.log("Passed TurfId", turfId)
+      const response = await axiosInstance({
+                      url :`/review/review/${id}`
+      })
+      setReview(response?.data?.data)
+      console.log("Review === ",review)
+      setShowModal(true)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
   
 
   return (
@@ -101,7 +127,7 @@ function UserBooking() {
                             return (
                               <tr key={booking?._id}>
                                 <td>{index + 1}</td>
-                                <td>{booking?.turfId?.name}</td>
+                                <td>{booking?.turfId?.name || "N/A"}</td>
                                 <td>
                                   {new Date(booking?.date).toLocaleDateString()}
                                 </td>
@@ -174,12 +200,17 @@ function UserBooking() {
                         pastBookings.map((booking, index) => (
                           <tr key={booking?._id}>
                             <td>{index + 1}</td>
-                            <td>{booking?.turfId?.name}</td>
+                            <td>{booking?.turfId?.name || "N/A"}</td>
                             <td>
                               {new Date(booking?.date).toLocaleDateString()}
                             </td>
                             <td>{booking?.slots?.join(", ")}</td>
-                            <td className="text-center">{booking?.status}</td>
+                            <td className="text-center text-danger">{booking?.status}<br></br>
+                              {booking?.status === "completed" ? <>
+                                <Button style={{ padding: "1px 2px" }} onClick={() => {
+                                handleReview(booking?.turfId?._id)
+                              }}>write a review</Button></>:<></>}
+                            </td>
                           </tr>
                         ))
                       ) : (
@@ -190,7 +221,13 @@ function UserBooking() {
                         </tr>
                       )}
                     </tbody>
-                  </Table>
+                    </Table>
+                    
+                    <ReviewModal show={showModal}
+                      handleClose={() => setShowModal(false)}
+                      turfId={turfId}
+                      oldReview={review} />
+                    
                 </>
               )}
             </Tab>

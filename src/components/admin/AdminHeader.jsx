@@ -84,6 +84,13 @@ function AdminHeader() {
                             Bookings
                           </Link>
                           <Link
+                            to="/admin/payment"
+                            className="text-dark my-2 mx-2"
+                            style={{ textDecoration: "none" }}
+                          >
+                            Payment Details
+                          </Link>
+                          <Link
                             to="/admin/enquiries"
                             className="text-dark my-2 mx-2"
                             style={{ textDecoration: "none" }}

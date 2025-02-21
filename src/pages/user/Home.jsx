@@ -66,9 +66,10 @@ function Home() {
       <Container className="mt-5">
         <Row>
           {turfList?.map((turf, index) => {
+            
             return (
               <Col key={turf?._id} xs={12} sm={12} md={6} lg={4} xl={3} xxl={3}>
-                <Turf turfInfo={turf} />
+                <Turf turfInfo={turf}/>
               </Col>
             );
           })}

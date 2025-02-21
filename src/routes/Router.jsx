@@ -34,6 +34,9 @@ import AdminTurfEditPage from "../pages/admin/AdminTurfEditPage";
 import PaymentSuccess from "../pages/user/PaymentSuccess";
 import PaymentError from "../pages/user/PaymentError";
 import ManagerDetails from "../pages/admin/ManagerDetails";
+import PaymentDetails from "../pages/admin/PaymentDetails";
+import PaymentHistory from "../pages/user/PaymentHistory";
+import ReviewPage from "../pages/user/ReviewPage";
 
 
 export const router = createBrowserRouter([
@@ -108,6 +111,14 @@ export const router = createBrowserRouter([
           {
             path: "payment-error",
             element : <PaymentError />
+          },
+          {
+            path: "payment",
+            element:<PaymentHistory />
+          },
+          {
+            path: "review",
+            element:<ReviewPage />
           }
         ],
       },
@@ -169,6 +180,10 @@ export const router = createBrowserRouter([
           {
             path: "manager-details/:id",
             element : <ManagerDetails/>
+          },
+          {
+            path: "payment",
+            element : <PaymentDetails />
           }
         ],
       },

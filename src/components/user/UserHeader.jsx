@@ -106,7 +106,14 @@ function UserHeader() {
                   className="text-dark my-2 mx-2"
                   style={{ textDecoration: "none" }}
                 >
-                  Booking Details
+                  My Bookings
+                  </Link>
+                  <Link
+                  to="/user/payment"
+                  className="text-dark my-2 mx-2"
+                  style={{ textDecoration: "none" }}
+                >
+                  Payment History
                 </Link>
                 <Link
                   to="/user/profile"
