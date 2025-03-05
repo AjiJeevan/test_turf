@@ -69,6 +69,7 @@ function UserHeader() {
       
 
       toast.success("You have loged out successfully")
+      dispatch(clearUser());
       navigate("./");
 
     } catch (error) {
