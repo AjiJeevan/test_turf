@@ -7,6 +7,7 @@ import Contacts from '../../components/shared/Contacts';
 import { axiosInstance } from '../../config/axiosInstance';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTurfLists } from '../../app/features/turf/turfSlice';
+import { clearUser } from '../../app/features/user/userSlice';
 import MainBanner from '../../components/shared/MainBanner';
 import { useNavigate } from 'react-router-dom';
 
