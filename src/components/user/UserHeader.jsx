@@ -65,7 +65,7 @@ function UserHeader() {
       // console.log("logout=====",response?.data?.message)
 
       localStorage.removeItem("token");
-      Cookies.remove('token');
+      Cookies.remove("token");
       
 
       toast.success("You have loged out successfully")
