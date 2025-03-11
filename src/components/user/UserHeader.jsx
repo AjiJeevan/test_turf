@@ -67,18 +67,18 @@ function UserHeader() {
       localStorage.removeItem("token");
       Cookies.remove("token");
       
-
+      // dispatch(setIsLogedIn(false))
       toast.success("You have loged out successfully")
       dispatch(clearUser());
-      navigate();
+      navigate("./");
 
     } catch (error) {
       console.log(error)
       toast.error(error?.response?.data?.message)
     }
-    finally {
-      dispatch(clearUser());
-    }
+    // finally {
+    //   dispatch(clearUser());
+    // }
   }
 
   return (

@@ -82,7 +82,7 @@ function UserBooking() {
   const handleReview = async (id) => {
     try {
       console.log("Passed TurfId", id)
-      setTurfId(turfId);
+      setTurfId(id);
       // console.log("Passed TurfId", turfId)
       const response = await axiosInstance({
                       url :`/review/review/${id}`

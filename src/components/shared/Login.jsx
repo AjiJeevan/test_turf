@@ -3,6 +3,7 @@ import { Form, Button, Container, Card } from "react-bootstrap";
 import { axiosInstance } from '../../config/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { setIsLogedIn } from '../../app/features/logedIn/logedInSlice';
 import {setUser} from "../../app/features/user/userSlice"
 import toast from 'react-hot-toast';
 
@@ -45,7 +46,7 @@ function Login() {
           console.log(" user data==== ", response.data.data)
           
             dispatch(setUser(response?.data?.data))
-            
+            dispatch(setIsLogedIn(true))
             toast.success("Login Successfull")
             navigate(user.profileRoute) 
         } catch (error) {

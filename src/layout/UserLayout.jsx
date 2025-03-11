@@ -9,6 +9,7 @@ import { clearUser, setUser } from '../app/features/user/userSlice';
 
 function UserLayout() {
   const userInfo = useSelector((state) => (state.user))
+  const isLogedIn = useSelector((state)=>(state.logedin.value))
   
   //  console.log("isUserAuth from User Layout====", userInfo.isUserAuth);
    const dispatch = useDispatch();
@@ -38,7 +39,7 @@ function UserLayout() {
   return (
     <div>
       <section>
-      <header>{userInfo.isUserAuth ? <UserHeader /> : <Header />}</header>
+      <header>{(userInfo.isUserAuth && isLogedIn) ? <UserHeader /> : <Header />}</header>
       </section>
       <section className='min-vh-100'>
         <Outlet />

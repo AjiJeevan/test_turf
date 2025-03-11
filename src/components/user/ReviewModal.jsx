@@ -15,7 +15,7 @@ function ReviewModal({ show, handleClose, turfId, oldReview}) {
       console.log("Old review Id=== ", oldReview);
       setReview(oldReview)
       setRating(oldReview.rating || 5);
-      setComment(oldReview.comment || "");
+      // setComment(oldReview.comment || "");
       setFirstTime(false);
     }
   }, [oldReview]);
@@ -90,7 +90,7 @@ function ReviewModal({ show, handleClose, turfId, oldReview}) {
             <Form.Control
               as="textarea"
               rows={3}
-              value={comment || review?.comment}
+                // value={comment || review?.comment}
               onChange={(e) => setComment(e.target.value)}
             />
           </Form.Group>
