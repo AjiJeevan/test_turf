@@ -31,10 +31,11 @@ function UserLayout() {
   };
 
   useEffect(() => {
-    if (!userInfo.isUserAuth) {
-      checkUser();
-    }
-  }, []);
+    // if (!userInfo.isUserAuth) {
+    //   checkUser();
+    // }
+    checkUser();
+  }, [location.pathname]);
     
   return (
     <div>
