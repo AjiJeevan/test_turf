@@ -47,8 +47,9 @@ function ManagerDetails() {
        
 
     const handleDateChange = (date) => {
-        setSelectedDate(date);
-        setManager({ ...manager, [dob]: selectedDate });
+      setSelectedDate(date);
+      console.log(date)
+        setManager({ ...manager, ["dob"]: date });
     
   };
 
@@ -74,7 +75,7 @@ function ManagerDetails() {
   };
 
     const handleCancel = () => {
-      setSelectedDate()
+    setSelectedDate()
     setIsEdting(false);
     fetchData();
   };

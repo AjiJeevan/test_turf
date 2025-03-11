@@ -46,7 +46,6 @@ function Login() {
           console.log(" user data==== ", response.data.data)
           
             dispatch(setUser(response?.data?.data))
-            dispatch(setIsLogedIn(true))
             toast.success("Login Successfull")
             navigate(user.profileRoute) 
         } catch (error) {

@@ -27,7 +27,7 @@ function TurfDisplay() {
 
   useEffect(() => {
     fetchTurfs();
-  }, [turfList]);
+  }, []);
   return (
     <>
       <Container className=' mt-5 px-5 py-3'>
