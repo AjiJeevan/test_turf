@@ -76,9 +76,9 @@ function UserHeader() {
       console.log(error)
       toast.error(error?.response?.data?.message)
     }
-    // finally {
-    //   dispatch(clearUser());
-    // }
+    finally {
+      dispatch(clearUser());
+    }
   }
 
   return (

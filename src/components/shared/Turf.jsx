@@ -55,6 +55,7 @@ function Turf(props) {
               [...Array(Math.round(props?.turfInfo.rating))].map((_, index) => (
                 <AiFillStar key={index} color="gold" size={24} />
               ))
+              
             ) : (
               <p>No Rating</p>
             )}

@@ -18,7 +18,7 @@ function ManagerBookingPage() {
       // console.log(response?.data?.data)
       const pending = response?.data?.data?.filter((booking) => (booking.requestStatus === "pending" && booking.status === "confirmed") )
       const approved = response?.data?.data?.filter((booking) => (booking.requestStatus === "approved" && booking.status === "confirmed"))
-      const rejected = response?.data?.data?.filter((booking) => (booking.requestStatus === "rejected" || booking.status === "cancelledd") )
+      const rejected = response?.data?.data?.filter((booking) => (booking.requestStatus === "rejected" || booking.status === "cancelled") )
 
       setBookingsPending(pending)
       setBookingsApproved(approved)

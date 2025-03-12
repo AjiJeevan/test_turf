@@ -48,7 +48,7 @@ function PaymentDetails() {
                 <td>{payment?.paymentMethod}</td>
                 <td
                   className={
-                    payment?.paymentStatus === "Completed" ? "text-success" : zpayment?.paymentStatus === "Pending" ? "text-warning": "text-danger"}
+                    payment?.paymentStatus === "Completed" ? "text-success" : payment?.paymentStatus === "Pending" ? "text-warning": "text-danger"}
                 >
                   {payment?.paymentStatus}
                 </td>
